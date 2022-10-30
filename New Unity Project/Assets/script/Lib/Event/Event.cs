@@ -5,7 +5,7 @@ using UnityEngine;
 public class Event 
 {
     private static int eventID = 0;
-    public delegate void events(Dictionary<string, object> Dictionary);
+    public delegate void events(object Obecjt);
     private static Dictionary<Events, Dictionary<int, events>> store = new Dictionary<Events, Dictionary<int, events>>();
     public static int register(Events name, events events)
     {
@@ -25,7 +25,7 @@ public class Event
         return ID;
     }
 
-    public static void emit(Events name, Dictionary<string, object> value)
+    public static void emit(Events name,object value)
     {
         if (store.ContainsKey(name))
         {

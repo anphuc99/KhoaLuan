@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GUI/Lobby.unity
     guid: aa3978fb9beeddc4582827e88fb5df22
+  - enabled: 1
+    path: Assets/Scenes/GUI/WaitForPlayer.unity
+    guid: d0a8497f5ab17624b95046a63aff6235
+  - enabled: 1
+    path: Assets/Scenes/GUI/register.unity
+    guid: 58c1e041b301bb64092ac3928bb7701b
+  - enabled: 1
+    path: Assets/Scenes/GUI/ChooseCharater.unity
+    guid: f8c490b0bf500e5458f71b3e3ccd673a
   m_configObjects: {}
