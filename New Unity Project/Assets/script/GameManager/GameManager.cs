@@ -15,9 +15,20 @@ public class GameManager : MonoBehaviour
         Event.register(Events.register, register);
         Event.register(Events.goToLobby, goToLobby);
         Event.register(Events.createPlayer, createPlayer);
+        Event.register(Events.enoughPlayers, enoughPlayers);
         //PlayerPrefs.DeleteAll();
     }
     // Start is called before the first frame update
+    private void Start()
+    {
+        if (curScene != null)
+            SceneManager.UnloadSceneAsync(curScene);
+        SceneManager.LoadSceneAsync(SceneName.Test, LoadSceneMode.Additive);
+        curScene = SceneName.Test;
+
+        //Event.emit(Events.gameOnStart, null);
+    }
+
     public void login(object context)
     {
         if (curScene != null)
@@ -64,5 +75,14 @@ public class GameManager : MonoBehaviour
             SceneManager.UnloadSceneAsync(SceneName.Lobby);
         SceneManager.LoadSceneAsync(SceneName.Wait4Player, LoadSceneMode.Additive);
         curScene = SceneName.Wait4Player;
+    }
+
+    public void enoughPlayers(object context)
+    {
+        if (curScene != null)
+            SceneManager.UnloadSceneAsync(curScene);
+        //SceneManager.LoadSceneAsync(SceneName.LoadStadium, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(SceneName.Stadium, LoadSceneMode.Additive);
+        curScene = SceneName.Stadium;
     }
 }

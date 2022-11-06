@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public enum Events
 {
@@ -12,6 +13,7 @@ public enum Events
     goBack,
     goToLobby,
     createPlayer,
+    setAttribule,
     onStart,
     onJoinLobby,
     createRoom,
@@ -24,20 +26,36 @@ public enum Events
     playerAccept,
     enoughPlayers,
     goToGame,
+    gameOnStart,
+    sendTokenToMasterClient,
+    receiveTokenFromClient,
+    senTeamToClient,
+    receiveTeamFromMasterClient,
 }
 public struct SceneName
 {
+    public const string Test = "Test";
     public const string Login = "Login";
     public const string ChooseCharater = "ChooseCharater";
     public const string Lobby = "Lobby";
     public const string Wait4Player = "WaitForPlayer";
     public const string Register = "Register";
     public const string LoadStadium = "LoadStadium";
+    public const string Stadium = "Stadium";
 }
 
-public struct Define
+public class Define
 {
     public const int MaxPlayers = 2;
+    public static Vector3[] positionTeam = new Vector3[6] 
+    {
+        new Vector3(0,0,-53), 
+        new Vector3(-3,0,-53), 
+        new Vector3(3,0,-53),
+        new Vector3(0,0,-47),
+        new Vector3(-3,0,-47),
+        new Vector3(3,0,-47)
+    };
 }
 
 public struct URL

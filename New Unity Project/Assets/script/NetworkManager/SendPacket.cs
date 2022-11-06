@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,10 +11,18 @@ public class SendPacket : MonoBehaviourPunCallbacks
     {
         photonView = PhotonView.Get(this);
         Event.register(Events.onAccept, onAccept);
+        Event.register(Events.senTeamToClient, sendTeamToClient);
+    }
+    private void sendTeamToClient(object players)
+    {
+        Json.PlayerTeam[] playerTeams = players as Json.PlayerTeam[];
+        string json = JsonHelper.ToJson<Json.PlayerTeam>(playerTeams);
+        photonView.RPC("sendTeamToClient", RpcTarget.All, json);
     }
 
     private void onAccept(object o)
     {
         photonView.RPC("playerAccept", RpcTarget.All, PhotonNetwork.LocalPlayer);
     }
+
 }

@@ -14,12 +14,12 @@ public class PlayerClientManager : MonoBehaviour
     private void Awake()
     {
         Event.register(Events.loggedIn, logedIn);
+        Event.register(Events.setAttribule, setAttribule);
     }
 
     public void logedIn(object context)
     {
-        Debug.Log("cjh");
-        account = (Account) context;
+        account = (Account)context;
         Account account1 = (Account)context;
         PlayerPrefs.SetString("_token", account1._token);
         PlayerPrefs.Save();
@@ -44,9 +44,14 @@ public class PlayerClientManager : MonoBehaviour
             else
             {
                 string json = www.downloadHandler.text;
-                JsonUtility.FromJsonOverwrite(json, this);
+                setAttribule(json);
                 Event.emit(Events.goToLobby, null);
             }
         }
+    }
+
+    private void setAttribule(object json)
+    {
+        JsonUtility.FromJsonOverwrite((string)json, this);
     }
 }

@@ -5,6 +5,7 @@ from .serializers import ChooseCharater, PlayerSeri, AccountID
 from .models import Player
 from Account.models import Account
 from django.db import IntegrityError
+import socket
 # Create your views here.
 
 class ChooseCharaterAPI(APIView):
@@ -39,4 +40,5 @@ class CheckPlayerAPI(APIView):
             player = PlayerSeri(player)
             return Response(data= player.data, status= status.HTTP_200_OK)
         except Player.DoesNotExist:
-            return Response(status= status.HTTP_400_BAD_REQUEST)            
+            return Response(status= status.HTTP_400_BAD_REQUEST)
+

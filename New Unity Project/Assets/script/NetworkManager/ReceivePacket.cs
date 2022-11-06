@@ -11,4 +11,12 @@ public class ReceivePacket : MonoBehaviourPunCallbacks
     {
         Event.emit(Events.playerAccept, player);
     }
+
+    [PunRPC]
+    public void sendTeamToClient(string json)
+    {
+        Debug.Log(json);
+        Json.PlayerTeam[] playerTeams = JsonHelper.FromJson<Json.PlayerTeam>(json);
+        Event.emit(Events.receiveTeamFromMasterClient, playerTeams);
+    }
 }

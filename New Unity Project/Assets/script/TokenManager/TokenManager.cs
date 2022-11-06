@@ -6,7 +6,11 @@ using UnityEngine.Networking;
 
 public class TokenManager : MonoBehaviour
 {
-    void Start()
+    private void Awake()
+    {
+        Event.register(Events.gameOnStart, gameOnStart);
+    }
+    public void gameOnStart(object context)
     {
         StartCoroutine(token());
     }

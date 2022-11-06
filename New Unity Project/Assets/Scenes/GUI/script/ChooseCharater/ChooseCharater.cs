@@ -39,7 +39,7 @@ public class ChooseCharater : MonoBehaviour
             {
                 string json = www.downloadHandler.text;                                
                 Event.emit(Events.goToLobby, json);
-
+                Event.emit(Events.setAttribule, json);
             }
         }
     }
