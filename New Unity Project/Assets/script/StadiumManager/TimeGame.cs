@@ -9,8 +9,6 @@ public class TimeGame : MonoBehaviour
     private int eventID2;
     private int eventID3;
 
-    private bool gameEnd = false;
-
     private void Awake()
     {
         eventID = Event.register(Events.onGameStart, onGameStart);
@@ -26,7 +24,7 @@ public class TimeGame : MonoBehaviour
     {
         while (true)
         {
-            if (gameEnd) break;
+            if (Global.state != State.gameStart) break;
             if (!PhotonNetwork.IsMasterClient)
             {
                 yield return new WaitForFixedUpdate();

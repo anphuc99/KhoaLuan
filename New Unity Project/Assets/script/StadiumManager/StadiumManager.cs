@@ -14,16 +14,13 @@ public class StadiumManager : MonoBehaviourPunCallbacks
     {
         Vector3 position = new Vector3(0, 0, -50);
         PhotonNetwork.Instantiate(playerName, position, Quaternion.identity);
-        eventID = Event.register(Events.resultsTeamWin, resultGame);
+        Event.emit(Events.goToGame, null);
+        Global.state = State.waitForGame;
+        sendUserID();
     }
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    PhotonNetwork.Instantiate(this.playerName, new Vector3(0, 0, -50), Quaternion.identity);
-    //}
 
-    private void resultGame(object context)
+    private void sendUserID()
     {
-        Destroy(gameObject);
+        photonView.RPC("sendUserID", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.UserId ,Global.playerClient.account_id);
     }
 }

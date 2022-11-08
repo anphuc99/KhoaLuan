@@ -7,10 +7,7 @@ using UnityEngine.Networking;
 public class PlayerClientManager : MonoBehaviour
 {
     private Account account;
-    public int id;
-    public string name;
-    public int account_id;
-    public int score;
+    private PlayerClient playerClient;
     private void Awake()
     {
         Event.register(Events.loggedIn, logedIn);
@@ -21,9 +18,9 @@ public class PlayerClientManager : MonoBehaviour
     public void logedIn(object context)
     {
         account = (Account)context;
-        Account account1 = (Account)context;
-        PlayerPrefs.SetString("_token", account1._token);
+        PlayerPrefs.SetString("_token", account._token);
         PlayerPrefs.Save();
+        Global.account = account;
         StartCoroutine(checkPlayer());
     }
 
@@ -53,7 +50,9 @@ public class PlayerClientManager : MonoBehaviour
 
     private void setAttribule(object json)
     {
-        JsonUtility.FromJsonOverwrite((string)json, this);
+        playerClient = new PlayerClient();
+        JsonUtility.FromJsonOverwrite((string)json, playerClient);
+        Global.playerClient = playerClient;
     }
 
     private void endGame(object context)

@@ -58,6 +58,7 @@ public class StadiumUI : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         countDownObject.gameObject.SetActive(false);
+        Global.state = State.gameStart;
         Event.emit(Events.onGameStart, null);
     }
 

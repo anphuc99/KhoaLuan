@@ -210,10 +210,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxPlayers: 2
-  WaitForGame: 1
+  WaitForGame: 15
   TimeGame: 30
   TimeOver: 3
-  scoreWin: 1
+  scoreWin: 5
   quaternionsTeam:
   - {x: 0, y: 0, z: 0, w: 1}
   - {x: 0, y: 1, z: 0, w: 0}
@@ -438,7 +438,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279d038fe90428345bd388cb293ac180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  name: 
-  account_id: 0
-  score: 0

@@ -8,17 +8,16 @@ public class Ball : MonoBehaviourPunCallbacks
     public int force;
     private int eventID;
     private int eventID2;
-    private int eventID3;
 
     private void Awake()
     {
         eventID = Event.register(Events.onGameStart, onGameStart);
         eventID2 = Event.register(Events.onGameRestart, onGameStart);
-        eventID3 = Event.register(Events.resultsTeamWin, resultGame);
     }
 
     private void onGameStart(object context)
     {
+        if (Global.state != State.gameStart) return;
         transform.position = new Vector3(0,6,-50);
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.isTrigger = false;
@@ -30,6 +29,7 @@ public class Ball : MonoBehaviourPunCallbacks
     private void OnCollisionEnter(Collision collision)
     {
         //if (!PhotonNetwork.IsMasterClient) return;
+        if (Global.state != State.gameStart) return;
         if (collision.gameObject.tag == "Player")
         {
             photonView.TransferOwnership(collision.gameObject.GetComponent<PhotonView>().Owner);
@@ -43,6 +43,7 @@ public class Ball : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
+        if (Global.state != State.gameStart) return;
         if (other.gameObject.tag == "Goal_blue")
         {
             goalBuleGoal();
@@ -106,10 +107,5 @@ public class Ball : MonoBehaviourPunCallbacks
     {
         Event.unRegister(Events.onGameStart, eventID);
         Event.unRegister(Events.onGameRestart, eventID2);
-    }    
-
-    private void resultGame(object context)
-    {
-        Destroy(this);
     }
 }

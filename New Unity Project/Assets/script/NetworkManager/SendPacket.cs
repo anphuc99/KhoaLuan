@@ -13,6 +13,7 @@ public class SendPacket : MonoBehaviourPunCallbacks
         Event.register(Events.onAccept, onAccept);
         Event.register(Events.senTeamToClient, sendTeamToClient);
         Event.register(Events.setGlobalValue, setGloalValue);
+        Event.register(Events.sendUserID, sendUserID);
     }
     private void sendTeamToClient(object players)
     {
@@ -30,5 +31,10 @@ public class SendPacket : MonoBehaviourPunCallbacks
     {
         SetGlobal setGlobal = value as SetGlobal;
         photonView.RPC("setGloalValue", RpcTarget.All, PhotonNetwork.LocalPlayer ,setGlobal.key, setGlobal.value);
+    }
+
+    private void sendUserID(object context)
+    {
+        photonView.RPC("sendUserID", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.UserId, (int) context);
     }
 }

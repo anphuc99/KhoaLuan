@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         if (curScene != null)
             SceneManager.UnloadSceneAsync(curScene);
-        //SceneManager.LoadSceneAsync(SceneName.LoadStadium, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(SceneName.LoadStadium, LoadSceneMode.Additive);
         SceneManager.LoadSceneAsync(SceneName.Stadium, LoadSceneMode.Additive);
         curScene = SceneName.Stadium;
     }

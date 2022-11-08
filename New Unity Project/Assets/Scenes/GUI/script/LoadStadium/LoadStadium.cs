@@ -16,6 +16,7 @@ public class LoadStadium : MonoBehaviour
 
     private void goToGame(object context)
     {
+        Debug.Log("werwerwer");
         start = true;
     }
 

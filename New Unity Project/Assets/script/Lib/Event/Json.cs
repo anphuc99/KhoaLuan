@@ -12,6 +12,14 @@ namespace Json
         public string UserID;
         public int team;
         public int position;
-        public int user_id = 0;
+        public int account_id = 0;
+    }
+
+    [Serializable]
+    public class Resutls
+    {
+        public string playerTeams;
+        public int redScore;
+        public int blueScore;
     }
 }

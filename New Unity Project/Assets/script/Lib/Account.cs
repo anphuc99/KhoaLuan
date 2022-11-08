@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace Assets.script.Player
 {
-    internal class Account
+    public class Account
     {
         public int id;
         public string name;
         public string email;
         public string username;
         public string _token;
+    }
+
+    public class PlayerClient
+    {
+        public string name;
+        public int account_id;
+        public int score;
     }
 }

@@ -1,15 +1,27 @@
-﻿using System;
+﻿using Assets.script.Player;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public enum State
+{
+    appStart,
+    waitForGame,
+    gameStart,
+    gameEnd,
+}
+
 public static class Global
 {
+    public static State state = State.appStart;
     public static Dictionary<string, GameObject> playerInstantiation = new Dictionary<string, GameObject>();
     public static Dictionary<string, object> GlobalSync = new Dictionary<string, object>();
-    public static int myTeam;
+    public static int myTeam;    
+    public static Account account;
+    public static PlayerClient playerClient;
 }
 
 public class SetGlobal

@@ -42,6 +42,8 @@ public enum Events
     gameRaw,
     addTime,
     endGame,
+    sendUserID,
+    receiveUserID,
 }
 public struct SceneName
 {
@@ -91,6 +93,7 @@ public struct URL
     public const string account_token = root + "account/token";
     public const string player_chooseCharacter = root + "player/choose-character";
     public const string player_checkPlayer = root + "player/check-player";
+    public const string game_sendGameResutls= root + "game/send-game-resutls";
 }
 
 public struct Value

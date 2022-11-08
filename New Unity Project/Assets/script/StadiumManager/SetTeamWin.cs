@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Networking;
 
 public class SetTeamWin : MonoBehaviourPunCallbacks
 {
     private bool isGameRaw = false;
     private int eventID;
     private int eventID2;
-    private int eventID3;
     private void Awake()
     {
         eventID = Event.register(Events.enoughScore, setTeamWin);
-        eventID2 = Event.register(Events.timeOut, setTeamWin);
-        eventID3 = Event.register(Events.numberOfPlayersChange, numberOfPlayersChange);
+        eventID2 = Event.register(Events.timeOut, setTeamWin);        
     }
 
     private void setTeamWin(object context)
@@ -44,23 +43,40 @@ public class SetTeamWin : MonoBehaviourPunCallbacks
 
     private void addTodb()
     {
-        StartCoroutine(WaitGoToLobby());
+        StartCoroutine(requestAddTodb());
     }
 
-    private void numberOfPlayersChange(object num)
+    IEnumerator requestAddTodb()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        int number = (int)num;
-        if(number == 1)
+        Json.Resutls resutls = new Json.Resutls();        
+        resutls.playerTeams = (string)SetGlobal.getValue(Value.listPlayerTeam);
+        resutls.redScore = (int?) SetGlobal.getValue(Value.redScore) ?? 0;
+        resutls.blueScore = (int?) SetGlobal.getValue(Value.blueScore) ?? 0;
+        WWWForm form = new WWWForm();
+        form.AddField("playerTeams", resutls.playerTeams);
+        form.AddField("redScore", resutls.redScore);
+        form.AddField("blueScore", resutls.blueScore);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(URL.game_sendGameResutls, form))
         {
-            Event.emit(Events.endGame, null);
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                photonView.RPC(nameof(gameEnd), RpcTarget.All);
+            }
         }
+
     }
 
     IEnumerator WaitGoToLobby()
     {
         yield return new WaitForSeconds(5);
-        photonView.RPC(nameof(gameEnd), RpcTarget.All);
+        Event.emit(Events.endGame, null);
     }
 
     [PunRPC]
@@ -70,20 +86,19 @@ public class SetTeamWin : MonoBehaviourPunCallbacks
         {
             addTodb();
         }
+        Global.state = State.gameEnd;
         Event.emit(Events.resultsTeamWin, team);
     }
 
     [PunRPC]
     public void gameEnd()
     {
-        if(!PhotonNetwork.IsMasterClient)
-            Event.emit(Events.endGame, null);
+        StartCoroutine(WaitGoToLobby());
     }
 
     private void OnDisable()
     {
         Event.unRegister(Events.enoughScore, eventID);
         Event.unRegister(Events.timeOut, eventID2);
-        Event.unRegister(Events.numberOfPlayersChange, eventID3);
     }
 }
