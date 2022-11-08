@@ -9,9 +9,9 @@ namespace Json
     [Serializable]
     public class PlayerTeam
     {
-        public int viewID;
+        public string UserID;
         public int team;
         public int position;
-        public string _token;
+        public int user_id = 0;
     }
 }

@@ -19,4 +19,12 @@ public class ReceivePacket : MonoBehaviourPunCallbacks
         Json.PlayerTeam[] playerTeams = JsonHelper.FromJson<Json.PlayerTeam>(json);
         Event.emit(Events.receiveTeamFromMasterClient, playerTeams);
     }
+
+    [PunRPC]
+    public void setGloalValue(Player player,string key, object value)
+    {
+        if (!player.IsMasterClient) return;
+        Global.GlobalSync[key] = value;
+        Event.emit(Events.onSetValueGlobal, key);
+    }
 }

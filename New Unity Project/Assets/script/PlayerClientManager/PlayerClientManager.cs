@@ -15,6 +15,7 @@ public class PlayerClientManager : MonoBehaviour
     {
         Event.register(Events.loggedIn, logedIn);
         Event.register(Events.setAttribule, setAttribule);
+        Event.register(Events.endGame, endGame);
     }
 
     public void logedIn(object context)
@@ -53,5 +54,10 @@ public class PlayerClientManager : MonoBehaviour
     private void setAttribule(object json)
     {
         JsonUtility.FromJsonOverwrite((string)json, this);
+    }
+
+    private void endGame(object context)
+    {
+        Event.emit(Events.goBack, null);
     }
 }

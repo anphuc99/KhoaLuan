@@ -12,6 +12,7 @@ public class SendPacket : MonoBehaviourPunCallbacks
         photonView = PhotonView.Get(this);
         Event.register(Events.onAccept, onAccept);
         Event.register(Events.senTeamToClient, sendTeamToClient);
+        Event.register(Events.setGlobalValue, setGloalValue);
     }
     private void sendTeamToClient(object players)
     {
@@ -25,4 +26,9 @@ public class SendPacket : MonoBehaviourPunCallbacks
         photonView.RPC("playerAccept", RpcTarget.All, PhotonNetwork.LocalPlayer);
     }
 
+    private void setGloalValue(object value)
+    {
+        SetGlobal setGlobal = value as SetGlobal;
+        photonView.RPC("setGloalValue", RpcTarget.All, PhotonNetwork.LocalPlayer ,setGlobal.key, setGlobal.value);
+    }
 }

@@ -3,58 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Linq;
 
 public class MasterClientStadiumManager : MonoBehaviourPunCallbacks
 {
+    private int eventID;
+    private int eventID2;
     private void Awake()
     {
-        //Event.register(Events.register)
+        eventID = Event.register(Events.onBeginGameStart, onGameStart);
+        eventID2 = Event.register(Events.playerLeaveRoom, playerLeaveRoom);
     }
-
-    // Update is called once per frame
-    void Update()
+    private void onGameStart(object context)
     {
-        
-    }
-
-    private void Start()
-    {
-        StartCoroutine(senTeamToClient());
-    }
-
-    IEnumerator senTeamToClient()
-    {
-        while (true)
+        if (!PhotonNetwork.IsMasterClient) return;
+        Dictionary<string, GameObject> playerInstantiations = Global.playerInstantiation;
+        Json.PlayerTeam[] playerTeams = new Json.PlayerTeam[playerInstantiations.Count];
+        int i = 0;
+        foreach (KeyValuePair<string, GameObject> pair in playerInstantiations)
         {
-            if (!PhotonNetwork.IsMasterClient) break;
-            Dictionary<int, GameObject> playerInstantiations = Global.playerInstantiation;
-            if (playerInstantiations.Count != Define.MaxPlayers)
+            playerTeams[i] = new Json.PlayerTeam();
+            if (i < Define.MaxPlayers / 2)
             {
-                yield return new WaitForFixedUpdate();
-                continue;
-            }
-            Json.PlayerTeam[] playerTeams = new Json.PlayerTeam[playerInstantiations.Count];
-            Debug.Log("co cocoocococ" + playerInstantiations.Count);
-            int i = 0;
-            foreach (KeyValuePair<int, GameObject> pair in playerInstantiations)
-            {
-                playerTeams[i] = new Json.PlayerTeam();
-                if (i < Define.MaxPlayers / 2)
-                {
-                    playerTeams[i].viewID = pair.Key;
-                    playerTeams[i].team = 1;
-                }
-                else
-                {
-                    playerTeams[i].viewID = pair.Key;
-                    playerTeams[i].team = 2;
-                }
+                playerTeams[i].UserID = pair.Key;
+                playerTeams[i].team = 0;
                 playerTeams[i].position = i;
-                i++;
             }
-
-            Event.emit(Events.senTeamToClient, playerTeams);
-            break;
+            else
+            {
+                playerTeams[i].UserID = pair.Key;
+                playerTeams[i].team = 1;
+                playerTeams[i].position = i - Define.MaxPlayers / 2;
+            }
+            i++;
         }
+        Event.emit(Events.senTeamToClient, playerTeams);
+        string json = JsonHelper.ToJson<Json.PlayerTeam>(playerTeams);
+        SetGlobal.setValue(Value.listPlayerTeam, json);
+    }    
+
+    private void playerLeaveRoom(object _player)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        Player player = (Player)_player;
+        string json = (string)SetGlobal.getValue(Value.listPlayerTeam);
+        List<Json.PlayerTeam> playerTeams = JsonHelper.FromJson<Json.PlayerTeam>(json).ToList();
+        Json.PlayerTeam playerItem = playerTeams.Find(x => x.UserID == player.UserId);
+        playerTeams.Remove(playerItem);
+    }
+
+    private void OnDisable()
+    {
+        Event.unRegister(Events.onGameStart, eventID);
     }
 }

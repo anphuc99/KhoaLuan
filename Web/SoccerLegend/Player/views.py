@@ -34,7 +34,7 @@ class CheckPlayerAPI(APIView):
         try:
             account_id = AccountID(data= request.data)
             if not account_id.is_valid():
-                return Response(data="not aqweqweok", status=status.HTTP_400_BAD_REQUEST)    
+                return Response(data="not request", status=status.HTTP_400_BAD_REQUEST)    
             print(account_id.data["account_id"])
             player = Player.objects.get(account_id = account_id.data["account_id"])
             player = PlayerSeri(player)

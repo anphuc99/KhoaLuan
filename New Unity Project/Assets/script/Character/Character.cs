@@ -26,9 +26,6 @@ public class Character : MonoBehaviourPunCallbacks
 
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
-    public Texture team_red;
-    public Texture team_blue;
-
     private float m_currentV = 0;
     private float m_currentH = 0;
 
@@ -48,11 +45,12 @@ public class Character : MonoBehaviourPunCallbacks
     private PhotonView m_photonView;
 
     private List<Collider> m_collisions = new List<Collider>();
+    private PhotonView photonView;
 
     private void Awake()
     {
-        Event.register(Events.receiveTeamFromMasterClient, receiveTeamFromMasterClient);
-        Global.playerInstantiation.Add(photonView.ViewID, this.gameObject);
+        photonView = GetComponent<PhotonView>();
+        Global.playerInstantiation[photonView.Owner.UserId] = this.gameObject;
         if (!photonView.IsMine) return;
         Camera camera = Camera.main;
         camera.transform.parent.SetParent(transform);
@@ -223,7 +221,7 @@ public class Character : MonoBehaviourPunCallbacks
         if (jumpCooldownOver && m_isGrounded && m_jumpInput)
         {
             m_jumpTimeStamp = Time.time;
-            m_rigidBody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
+            m_rigidBody.AddForce(Vector3.up * m_jumpForce*100, ForceMode.Impulse);
         }
 
         if (!m_wasGrounded && m_isGrounded)
@@ -234,29 +232,6 @@ public class Character : MonoBehaviourPunCallbacks
         if (!m_isGrounded && m_wasGrounded)
         {
             m_animator.SetTrigger("Jump");
-        }
-    }
-
-    private void receiveTeamFromMasterClient(object playerTeams)
-    {
-        Json.PlayerTeam[] playerTeams1 = (Json.PlayerTeam[])playerTeams;
-        foreach (Json.PlayerTeam playerTeam in playerTeams1)
-        {
-            if (photonView.ViewID == playerTeam.viewID)
-            {
-                GameObject body = transform.Find("body").gameObject;
-                if (playerTeam.team == 1)
-                {
-                    SkinnedMeshRenderer m_Renderer = body.GetComponent<SkinnedMeshRenderer>();
-                    m_Renderer.material.mainTexture = team_red;
-                }
-                else
-                {
-                    SkinnedMeshRenderer m_Renderer = body.GetComponent<SkinnedMeshRenderer>();
-                    m_Renderer.material.mainTexture = team_blue;
-                }
-                transform.position = Define.positionTeam[playerTeam.position];                
-            }
         }
     }
 }

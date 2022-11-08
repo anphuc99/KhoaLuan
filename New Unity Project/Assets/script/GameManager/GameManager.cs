@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Event.register(Events.login, login);        
-        Event.register(Events.goBack, goBack);
+        Event.register(Events.goBack, goToLobby);
         Event.register(Events.onStart, onStart);
         Event.register(Events.register, register);
         Event.register(Events.goToLobby, goToLobby);
@@ -59,14 +59,6 @@ public class GameManager : MonoBehaviour
             SceneManager.UnloadSceneAsync(SceneName.Login);
         SceneManager.LoadSceneAsync(SceneName.Register, LoadSceneMode.Additive);
         curScene = SceneName.Register;
-    }
-
-    public void goBack(object context)
-    {
-        if (curScene != null)
-            SceneManager.UnloadSceneAsync(curScene);
-        SceneManager.LoadSceneAsync(SceneName.Lobby, LoadSceneMode.Additive);
-        curScene = SceneName.Lobby;
     }
 
     public void onStart(object context)

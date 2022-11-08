@@ -31,6 +31,17 @@ public enum Events
     receiveTokenFromClient,
     senTeamToClient,
     receiveTeamFromMasterClient,
+    setGlobalValue,
+    onSetValueGlobal,
+    onBeginGameStart,
+    onGameStart,
+    onGameRestart,
+    enoughScore,
+    timeOut,
+    resultsTeamWin,
+    gameRaw,
+    addTime,
+    endGame,
 }
 public struct SceneName
 {
@@ -46,15 +57,29 @@ public struct SceneName
 
 public class Define
 {
-    public const int MaxPlayers = 2;
-    public static Vector3[] positionTeam = new Vector3[6] 
+    public static int MaxPlayers = 2;
+    public static int WaitForGame = 15;
+    public static int TimeGame = 300;
+    public static int TimeOver = 30;
+    public static int scoreWin = 5;
+    public static Vector3[,] positionTeam = new Vector3[2, 3]
     {
-        new Vector3(0,0,-53), 
-        new Vector3(-3,0,-53), 
-        new Vector3(3,0,-53),
-        new Vector3(0,0,-47),
-        new Vector3(-3,0,-47),
-        new Vector3(3,0,-47)
+        {
+            new Vector3(0,0,-55),
+            new Vector3(-3,0,-55),
+            new Vector3(3,0,-55),
+        },
+        {
+            new Vector3(0,0,-45),
+            new Vector3(-3,0,-45),
+            new Vector3(3,0,-45)
+        },
+    };
+
+    public static Quaternion[] quaternionsTeam = new Quaternion[2] 
+    {
+        Quaternion.identity,
+        new Quaternion(0,1,0,0),
     };
 }
 
@@ -66,4 +91,13 @@ public struct URL
     public const string account_token = root + "account/token";
     public const string player_chooseCharacter = root + "player/choose-character";
     public const string player_checkPlayer = root + "player/check-player";
+}
+
+public struct Value
+{
+    public const string TimeWait = "TimeWait";
+    public const string Time = "Time";
+    public const string redScore = "redScore";
+    public const string blueScore = "blueScore";
+    public const string listPlayerTeam = "listPlayerTeam";
 }
