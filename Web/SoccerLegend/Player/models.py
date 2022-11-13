@@ -2,7 +2,6 @@ from django.db import models
 class Player (models.Model):
     account_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, default = "")
-    history = models.TextField(default = "")
     # level = models.IntegerField()
     # exp = models.IntegerField()
     # money = models.IntegerField()

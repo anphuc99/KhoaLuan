@@ -6,8 +6,8 @@ public class Event
 {
     private static int eventID = 0;
     public delegate void events(object Obecjt);
-    private static Dictionary<Events, Dictionary<int, events>> store = new Dictionary<Events, Dictionary<int, events>>();
-    public static int register(Events name, events events)
+    private static Dictionary<string, Dictionary<int, events>> store = new Dictionary<string, Dictionary<int, events>>();
+    public static int register(string name, events events)
     {
         int ID = eventID;
         Dictionary<int, events> dict;
@@ -25,7 +25,7 @@ public class Event
         return ID;
     }
 
-    public static void emit(Events name,object value)
+    public static void emit(string name,object value)
     {
         if (store.ContainsKey(name))
         {
@@ -57,7 +57,7 @@ public class Event
         }
     }
 
-    public static void unRegister(Events name, int key)
+    public static void unRegister(string name, int key)
     {
         if (store.ContainsKey(name))
         {

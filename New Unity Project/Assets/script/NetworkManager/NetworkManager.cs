@@ -20,7 +20,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void goBack(object context)
     {
-        PhotonNetwork.Disconnect();
+        PhotonNetwork.Disconnect();        
     }
 
     public override void OnConnectedToMaster()
@@ -37,7 +37,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = (byte)Define.MaxPlayers;
         roomOptions.PublishUserId = true;
         PhotonNetwork.CreateRoom(roomid, roomOptions);
-        Event.emit(Events.createRoom, roomid);
+        Debug.Log("roomid: " + roomid);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        string roomid = PhotonNetwork.CurrentRoom.Name;
+        Debug.Log("roomid: " + roomid);
+        Event.emit(Events.onCreateRoom, roomid);        
     }
 
     public override void OnJoinedLobby()
@@ -52,7 +59,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Event.emit(Events.onJoinRoom, null);
+        string roomid = PhotonNetwork.CurrentRoom.Name;
+        Debug.Log("OnJoinedRoom: "+ roomid);
+        Global.curMasterClient = PhotonNetwork.MasterClient.UserId;
+        Event.emit(Events.onJoinRoom, roomid);
     }
 
     public override void OnLeftRoom()

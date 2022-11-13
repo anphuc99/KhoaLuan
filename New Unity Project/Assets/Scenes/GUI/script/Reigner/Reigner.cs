@@ -86,7 +86,7 @@ public class Reigner : MonoBehaviour
                 PlayerPrefs.SetString("_token", account._token);
                 PlayerPrefs.Save();
                 Event.emit(Events.createPlayer, account);
-                Event.emit(Events.setAttribule, json);
+                Global.account = account;
             }
         }
     }

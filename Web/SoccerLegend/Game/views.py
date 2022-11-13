@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .serializers import resutls
+from .serializers import resutls, Room, MasterClientOut
 from .models import Game
 from Player.models import Player
+from Account.models import Account
 from rest_framework.response import Response
 from rest_framework import status
 import json
 from types import SimpleNamespace
+from SoccerLegend.Global import Global
 
 # Create your views here.
 
@@ -42,4 +44,68 @@ class GameResutls(APIView):
                 player.score = player.score + 1            
             player.save()
         
-        return Response(data="ok", status=status.HTTP_200_OK)    
+        return Response(status=status.HTTP_200_OK)    
+    
+class CreateRoom(APIView):
+    def post(self, req):
+        data = Room(data = req.data)
+        if not data.is_valid():
+            return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)    
+        _token = data["_token"].value
+        roomID = data["roomID"].value 
+        player = Account.objects.get(_token = _token)     
+        room = {
+            "Master": _token,
+            "PlayerList": [],
+            "confirm": 0,
+            "newMaster": 0
+        }
+        Global.setValue(roomID, room)
+        return Response(status=status.HTTP_200_OK)
+        
+class JoinRoom(APIView):
+    def post(self, req):
+        data = Room(data = req.data)
+        if not data.is_valid():
+            return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)    
+        _token = data["_token"].value
+        roomID = data["roomID"].value
+        player = Account.objects.get(_token = _token)
+        room = Global.getValue(roomID)
+        room["PlayerList"].append(_token)
+        Global.setValue(roomID,room)
+        return Response(status=status.HTTP_200_OK)
+    
+class MasterClientOutGame(APIView):
+    def post(self, req):
+        data = MasterClientOut(data= req.data)
+        if not data.is_valid():
+            return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)   
+        _token = data["_token"].value
+        roomID = data["roomID"].value
+        newMaster = data["newMaster"].value
+        room = Global.getValue(roomID)
+        if _token in room["PlayerList"]:
+            if room["newMaster"] == 0 or room["newMaster"] == newMaster:
+                room["confirm"] += 1
+                room["newMaster"] = newMaster
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)        
+        Global.setValue(roomID,room)
+        return Response(status=status.HTTP_200_OK)
+
+
+class TestSession(APIView):
+    def post(self, req):
+        Global.setValue("abc","lalalal")
+        return Response(status=status.HTTP_200_OK)
+    def get(self, req):
+        ss = Global.getValue("abc")
+        return Response(data=ss ,status=status.HTTP_200_OK)
+    
+def lobby(request):
+    return render(request, 'chat/lobby.html')
+        
+        

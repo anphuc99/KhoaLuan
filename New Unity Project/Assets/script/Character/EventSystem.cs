@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Linq;
 
 public class EventSystem : MonoBehaviourPunCallbacks
 {
-
+    public string materialName;
     public Texture team_red;
     public Texture team_blue;
 
@@ -16,27 +17,35 @@ public class EventSystem : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        eventID = Event.register(Events.receiveTeamFromMasterClient, receiveTeamFromMasterClient);
+        eventID = Event.register(Events.receiveTeamFromSever, receiveTeamFromSever);
         eventID2 = Event.register(Events.onGameRestart, onGameRestart);
     }
 
-    private void receiveTeamFromMasterClient(object playerTeams)
+    private void receiveTeamFromSever(object playerTeams)
     {
-        Json.PlayerTeam[] playerTeams1 = (Json.PlayerTeam[])playerTeams;
+        Debug.Log((string)playerTeams);
+        Json.PlayerTeam[] playerTeams1 = JsonHelper.FromJson<Json.PlayerTeam>((string)playerTeams);
         foreach (Json.PlayerTeam playerTeam in playerTeams1)
         {
             if (photonView.Owner.UserId == playerTeam.UserID)
             {
                 GameObject body = transform.Find("body").gameObject;
+                List<Material> myMaterials = body.GetComponent<Renderer>().materials.ToList();
+                Material matBody = null;
+                foreach (Material mat in myMaterials)
+                {
+                    if(mat.name == materialName)
+                    {
+                        matBody = mat;
+                    }
+                }
                 if (playerTeam.team == 0)
                 {
-                    SkinnedMeshRenderer m_Renderer = body.GetComponent<SkinnedMeshRenderer>();
-                    m_Renderer.material.mainTexture = team_red;
+                    matBody.mainTexture = team_red;
                 }
                 else
                 {
-                    SkinnedMeshRenderer m_Renderer = body.GetComponent<SkinnedMeshRenderer>();
-                    m_Renderer.material.mainTexture = team_blue;
+                    matBody.mainTexture = team_blue;
                 }
                 team = playerTeam.team;
                 pos = playerTeam.position;
@@ -58,7 +67,7 @@ public class EventSystem : MonoBehaviourPunCallbacks
 
     private void OnDisable()
     {
-        Event.unRegister(Events.receiveTeamFromMasterClient, eventID);
+        Event.unRegister(Events.receiveTeamFromSever, eventID);
         Event.unRegister(Events.onGameRestart, eventID2);
     }
 }

@@ -17,7 +17,7 @@ public class ReceivePacket : MonoBehaviourPunCallbacks
     {
         Debug.Log(json);
         Json.PlayerTeam[] playerTeams = JsonHelper.FromJson<Json.PlayerTeam>(json);
-        Event.emit(Events.receiveTeamFromMasterClient, playerTeams);
+        Event.emit(Events.receiveTeamFromSever, playerTeams);
     }
 
     [PunRPC]

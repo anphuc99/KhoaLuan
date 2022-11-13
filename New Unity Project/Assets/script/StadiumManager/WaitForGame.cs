@@ -19,12 +19,16 @@ public class WaitForGame : MonoBehaviourPunCallbacks
             if (!PhotonNetwork.IsMasterClient)
             {
                 yield return new WaitForFixedUpdate();
+                if(Global.state != State.waitForGame)
+                {
+                    break;
+                }
                 continue;
             };
             int time = (int?)SetGlobal.getValue(Value.TimeWait) ?? Define.WaitForGame;
             time = time - 1;
             SetGlobal.setValue(Value.TimeWait, time);
-            if (time == 0)
+            if (time <= 0)
             {
                 break;
             }

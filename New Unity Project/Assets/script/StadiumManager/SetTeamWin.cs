@@ -17,6 +17,11 @@ public class SetTeamWin : MonoBehaviourPunCallbacks
 
     private void setTeamWin(object context)
     {
+        if (Global.state == State.gameEnd)
+        {
+            addTodb();
+            return;
+        }
         int redScore = (int?)SetGlobal.getValue(Value.redScore) ?? 0;
         int blueScore = (int?)SetGlobal.getValue(Value.blueScore) ?? 0;
         if (redScore > blueScore)
@@ -48,35 +53,18 @@ public class SetTeamWin : MonoBehaviourPunCallbacks
 
     IEnumerator requestAddTodb()
     {
+        yield return new WaitForSeconds(5);
+        if (!PhotonNetwork.IsMasterClient) yield return null;
         Json.Resutls resutls = new Json.Resutls();        
-        resutls.playerTeams = (string)SetGlobal.getValue(Value.listPlayerTeam);
         resutls.redScore = (int?) SetGlobal.getValue(Value.redScore) ?? 0;
         resutls.blueScore = (int?) SetGlobal.getValue(Value.blueScore) ?? 0;
-        WWWForm form = new WWWForm();
-        form.AddField("playerTeams", resutls.playerTeams);
-        form.AddField("redScore", resutls.redScore);
-        form.AddField("blueScore", resutls.blueScore);
-
-        using (UnityWebRequest www = UnityWebRequest.Post(URL.game_sendGameResutls, form))
+        Json.SocketType<Json.Resutls> socketType = new Json.SocketType<Json.Resutls>()
         {
-            yield return www.SendWebRequest();
+            type = "sendResult",
+            data = resutls
+        };
 
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                photonView.RPC(nameof(gameEnd), RpcTarget.All);
-            }
-        }
-
-    }
-
-    IEnumerator WaitGoToLobby()
-    {
-        yield return new WaitForSeconds(5);
-        Event.emit(Events.endGame, null);
+        Event.emit(Events.socketSendMessage, socketType);
     }
 
     [PunRPC]
@@ -88,12 +76,6 @@ public class SetTeamWin : MonoBehaviourPunCallbacks
         }
         Global.state = State.gameEnd;
         Event.emit(Events.resultsTeamWin, team);
-    }
-
-    [PunRPC]
-    public void gameEnd()
-    {
-        StartCoroutine(WaitGoToLobby());
     }
 
     private void OnDisable()

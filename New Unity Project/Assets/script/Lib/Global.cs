@@ -11,6 +11,7 @@ public enum State
     appStart,
     waitForGame,
     gameStart,
+    gamePause,
     gameEnd,
 }
 
@@ -22,6 +23,8 @@ public static class Global
     public static int myTeam;    
     public static Account account;
     public static PlayerClient playerClient;
+    public static string curMasterClient;
+    public static bool IsMasterCertificate;
 }
 
 public class SetGlobal

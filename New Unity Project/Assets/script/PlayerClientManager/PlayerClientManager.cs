@@ -12,7 +12,6 @@ public class PlayerClientManager : MonoBehaviour
     {
         Event.register(Events.loggedIn, logedIn);
         Event.register(Events.setAttribule, setAttribule);
-        Event.register(Events.endGame, endGame);
     }
 
     public void logedIn(object context)
@@ -20,7 +19,7 @@ public class PlayerClientManager : MonoBehaviour
         account = (Account)context;
         PlayerPrefs.SetString("_token", account._token);
         PlayerPrefs.Save();
-        Global.account = account;
+        Global.account = account;        
         StartCoroutine(checkPlayer());
     }
 
@@ -28,7 +27,6 @@ public class PlayerClientManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();    
         form.AddField("account_id", account.id);
-        Debug.Log(URL.account_register + form.ToString());
         
         using (UnityWebRequest www = UnityWebRequest.Post(URL.player_checkPlayer,form))
         {
@@ -53,10 +51,47 @@ public class PlayerClientManager : MonoBehaviour
         playerClient = new PlayerClient();
         JsonUtility.FromJsonOverwrite((string)json, playerClient);
         Global.playerClient = playerClient;
+        Event.emit(Events.canConnect, null);
     }
 
-    private void endGame(object context)
-    {
-        Event.emit(Events.goBack, null);
-    }
+    //IEnumerator createRoomRequest(string roomid)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("_token", account._token);
+    //    form.AddField("roomID", roomid);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post(URL.game_createRoom, form))
+    //    {
+    //        yield return www.SendWebRequest();
+
+    //        if (www.result != UnityWebRequest.Result.Success)
+    //        {
+    //            Debug.Log(www.error);
+    //            Event.emit(Events.goBack, null);
+    //        }            
+    //    }
+    //}
+
+    //private void onJoinRoom(object roomid)
+    //{
+    //    StartCoroutine(joinRoomRequest((string)roomid));
+    //}
+
+    //IEnumerator joinRoomRequest(string roomid)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("_token", account._token);
+    //    form.AddField("roomID", roomid);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post(URL.game_joinRoom, form))
+    //    {
+    //        yield return www.SendWebRequest();
+
+    //        if (www.result != UnityWebRequest.Result.Success)
+    //        {
+    //            Debug.Log(www.error);
+    //            Event.emit(Events.goBack, null);
+    //        }
+    //    }
+    //}
 }

@@ -23,19 +23,18 @@ public class TimeGame : MonoBehaviour
     IEnumerator timeGame()
     {
         while (true)
-        {
-            if (Global.state != State.gameStart) break;
+        {            
             if (!PhotonNetwork.IsMasterClient)
             {
                 yield return new WaitForFixedUpdate();
                 continue;
             }
-
             int time = (int?)SetGlobal.getValue(Value.Time) ?? Define.TimeGame;
             time--;
-            if(time == 0)
+            if(time <= 0)
             {
                 Event.emit(Events.timeOut, null);
+                break;
             }
             else if(time > 0)
             {
@@ -52,6 +51,7 @@ public class TimeGame : MonoBehaviour
             int time = (int)SetGlobal.getValue(Value.Time);
             time = (int)increTime;
             SetGlobal.setValue(Value.Time, time);
+            StartCoroutine(timeGame());
         }
     }
 

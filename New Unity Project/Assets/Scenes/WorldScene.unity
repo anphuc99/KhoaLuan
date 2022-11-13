@@ -209,9 +209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceee504764f55604bb2b603b933e2845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxPlayers: 2
-  WaitForGame: 15
-  TimeGame: 30
+  MaxPlayers: 1
+  WaitForGame: 3
+  TimeGame: 3000
   TimeOver: 3
   scoreWin: 5
   quaternionsTeam:
@@ -269,6 +269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 792471547}
+  - component: {fileID: 792471548}
   m_Layer: 0
   m_Name: SocketManager
   m_TagString: Untagged
@@ -290,6 +291,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &792471548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792471546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2316926cce365834daaa52dfc82779e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  webSocketURL: ws://localhost:8000/ws/socket-server/
+  IsConnected: 0
 --- !u!1 &818642532
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,6 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 828368210}
   - component: {fileID: 828368211}
+  - component: {fileID: 828368212}
   m_Layer: 0
   m_Name: PlayerClientManager
   m_TagString: Untagged
@@ -436,5 +452,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 279d038fe90428345bd388cb293ac180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &828368212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828368209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371809ef3731396428d66abfbbd4f54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

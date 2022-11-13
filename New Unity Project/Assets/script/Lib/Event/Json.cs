@@ -18,8 +18,29 @@ namespace Json
     [Serializable]
     public class Resutls
     {
-        public string playerTeams;
         public int redScore;
         public int blueScore;
+    }
+
+    [Serializable]
+    public class SocketType<T>
+    {
+        public string type;
+        public T data;
+    }
+
+    [Serializable]
+    public class SocketResponse
+    {
+        public string type;
+        public string data;
+    }
+
+    [Serializable]
+    public class Room
+    {
+        public string _token;
+        public string roomID;
+        public string clientID;
     }
 }

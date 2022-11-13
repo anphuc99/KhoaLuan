@@ -1297,11 +1297,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1719702584}
   - component: {fileID: 1719702583}
-  - component: {fileID: 1719702582}
   - component: {fileID: 1719702585}
   - component: {fileID: 1719702586}
   - component: {fileID: 1719702587}
   - component: {fileID: 1719702588}
+  - component: {fileID: 1719702589}
+  - component: {fileID: 1719702590}
   m_Layer: 0
   m_Name: StadiumManager
   m_TagString: Untagged
@@ -1309,18 +1310,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1719702582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719702581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd037dd07578c0540bb40db28368b7fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1719702583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,6 +1393,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2539f83a25283c240b53df3d3d1c1fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1719702589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719702581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4dce81d4e0f6848b5b42ffddd7ff77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1719702590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719702581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c43f3dd3afcba1448802d544693673a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1833987182
@@ -1933,6 +1946,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4147623582498445627, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
       propertyPath: m_Name
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147623582498445627, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
+      propertyPath: m_TagString
       value: Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4147623582498528494, guid: 3fda697253cc5774da95675419e2cda8, type: 3}

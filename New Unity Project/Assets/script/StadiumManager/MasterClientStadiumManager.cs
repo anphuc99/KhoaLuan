@@ -14,6 +14,7 @@ public class MasterClientStadiumManager : MonoBehaviourPunCallbacks
     {
         eventID = Event.register(Events.onBeginGameStart, onGameStart);
         eventID2 = Event.register(Events.playerLeaveRoom, playerLeaveRoom);
+        PhotonNetwork.CurrentRoom.IsVisible = false;
     }
     private void onGameStart(object context)
     {

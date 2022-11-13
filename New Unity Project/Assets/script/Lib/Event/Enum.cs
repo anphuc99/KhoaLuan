@@ -5,45 +5,55 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public enum Events
+public static class Events
 {
-    login,
-    loggedIn,
-    register,
-    goBack,
-    goToLobby,
-    createPlayer,
-    setAttribule,
-    onStart,
-    onJoinLobby,
-    createRoom,
-    onJoinRoom,
-    onLeaveRoom,
-    playerJoinRoom,
-    playerLeaveRoom,
-    numberOfPlayersChange,
-    onAccept,
-    playerAccept,
-    enoughPlayers,
-    goToGame,
-    gameOnStart,
-    sendTokenToMasterClient,
-    receiveTokenFromClient,
-    senTeamToClient,
-    receiveTeamFromMasterClient,
-    setGlobalValue,
-    onSetValueGlobal,
-    onBeginGameStart,
-    onGameStart,
-    onGameRestart,
-    enoughScore,
-    timeOut,
-    resultsTeamWin,
-    gameRaw,
-    addTime,
-    endGame,
-    sendUserID,
-    receiveUserID,
+    public static string
+        login = "login",
+        loggedIn = "loggedIn",
+        canConnect = "canConnect",
+        register = "register",
+        goBack = "goBack",
+        goToLobby = "goToLobby",
+        createPlayer = "createPlayer",
+        setAttribule = "setAttribule",
+        onStart = "onStart",
+        onJoinLobby = "onJoinLobby",
+        onCreateRoom = "onCreateRoom",
+        onJoinRoom = "onJoinRoom",
+        onLeaveRoom = "onLeaveRoom",
+        playerJoinRoom = "playerJoinRoom",
+        playerLeaveRoom = "playerLeaveRoom",
+        numberOfPlayersChange = "numberOfPlayersChange",
+        onAccept = "onAccept",
+        playerAccept = "playerAccept",
+        enoughPlayers = "enoughPlayers",
+        goToGame = "goToGame",
+        gameOnStart = "gameOnStart",
+        sendTokenToMasterClient = "sendTokenToMasterClient",
+        receiveTokenFromClient = "receiveTokenFromClient",
+        senTeamToClient = "senTeamToClient",
+        receiveTeamFromSever = "receiveTeamFromSever",
+        setGlobalValue = "setGlobalValue",
+        onSetValueGlobal = "onSetValueGlobal",
+        onBeginGameStart = "onBeginGameStart",
+        onGameStart = "onGameStart",
+        onGameRestart = "onGameRestart",
+        enoughScore = "enoughScore",
+        timeOut = "timeOut",
+        resultsTeamWin = "resultsTeamWin",
+        gameRaw = "gameRaw",
+        addTime = "addTime",
+        endGame = "endGame",
+        sendUserID = "sendUserID",
+        receiveUserID = "receiveUserID",
+        connected = "connected",
+        closeSocket = "closeSocket",
+        socketSendMessage = "socketSendMessage",
+        onServerCreateRoom = "onServerCreateRoom",
+        onServerJoinRoom = "onServerJoinRoom",
+        masterCertificate = "masterCertificate",
+        setNewMaster = "setNewMaster";
+
 }
 public struct SceneName
 {
@@ -94,6 +104,9 @@ public struct URL
     public const string player_chooseCharacter = root + "player/choose-character";
     public const string player_checkPlayer = root + "player/check-player";
     public const string game_sendGameResutls= root + "game/send-game-resutls";
+    public const string game_createRoom= root + "game/create-room";
+    public const string game_joinRoom= root + "game/join-room";
+    public const string game_masterOutGameRoom= root + "game/master-out-room";
 }
 
 public struct Value

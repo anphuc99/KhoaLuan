@@ -59,11 +59,11 @@ public class Ball : MonoBehaviourPunCallbacks
             GetComponent<Renderer>().enabled = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().useGravity = false;
-            GetComponent<Collider>().isTrigger = true;
             if (PhotonNetwork.IsMasterClient)
             {
                 StartCoroutine(waitGameRestart());                
             }
+            Global.state = State.gamePause;
         }
     }
 
@@ -100,6 +100,7 @@ public class Ball : MonoBehaviourPunCallbacks
     [PunRPC]
     private void GameRestart()
     {
+        Global.state = State.gameStart;
         Event.emit(Events.onGameRestart, null);
     }
 
