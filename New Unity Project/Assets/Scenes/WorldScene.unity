@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxPlayers: 1
   WaitForGame: 3
-  TimeGame: 3000
+  TimeGame: 300
   TimeOver: 3
   scoreWin: 5
   quaternionsTeam:

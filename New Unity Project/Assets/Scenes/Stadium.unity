@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2041645472}
-  m_IndirectSpecularColor: {r: 0.15202957, g: 0.16833717, b: 0.20317075, a: 1}
+  m_IndirectSpecularColor: {r: 0.15202975, g: 0.1683374, b: 0.20317093, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 3ea381926f25fc04292efae5572a15ea, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: b21585cabe83f2444bf30b40e517f616, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -694,8 +694,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684376189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07, y: 1.41, z: -28.58}
-  m_LocalScale: {x: 7.8314886, y: 2.9475105, z: 1}
+  m_LocalPosition: {x: 0.07, y: 1.41, z: -26.575}
+  m_LocalScale: {x: 7.8314886, y: 2.9475105, z: 5.1143}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -1043,8 +1043,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059898198}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.003, y: 1.41, z: -71.28}
-  m_LocalScale: {x: 7.831489, y: 2.94751, z: 1}
+  m_LocalPosition: {x: -0.003, y: 1.41, z: -73.54}
+  m_LocalScale: {x: 7.831489, y: 2.94751, z: 5.4258}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -1941,8 +1941,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4147623582485546975, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147623582485546975, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4147623582498445627, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
       propertyPath: m_Name

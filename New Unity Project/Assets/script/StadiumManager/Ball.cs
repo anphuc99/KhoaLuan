@@ -19,8 +19,8 @@ public class Ball : MonoBehaviourPunCallbacks
     {
         if (Global.state != State.gameStart) return;
         transform.position = new Vector3(0,6,-50);
-        SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        sphereCollider.isTrigger = false;
+        Collider sphereCollider = GetComponent<Collider>();
+        sphereCollider.enabled = true;
         GetComponent<Renderer>().enabled = true;
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
@@ -35,7 +35,8 @@ public class Ball : MonoBehaviourPunCallbacks
             photonView.TransferOwnership(collision.gameObject.GetComponent<PhotonView>().Owner);
             Rigidbody rb = GetComponent<Rigidbody>();
             Vector3 force = transform.position - collision.transform.position;
-            rb.AddForce(force*this.force);
+            BaseAttribute attribute = collision.gameObject.GetComponent<BaseAttribute>();
+            rb.AddForce(force*attribute.shotForce*10);
         }
     }
 
@@ -59,6 +60,7 @@ public class Ball : MonoBehaviourPunCallbacks
             GetComponent<Renderer>().enabled = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Collider>().enabled = false;
             if (PhotonNetwork.IsMasterClient)
             {
                 StartCoroutine(waitGameRestart());                

@@ -25,6 +25,7 @@ public static class Global
     public static PlayerClient playerClient;
     public static string curMasterClient;
     public static bool IsMasterCertificate;
+    public static string clientLang;
 }
 
 public class SetGlobal

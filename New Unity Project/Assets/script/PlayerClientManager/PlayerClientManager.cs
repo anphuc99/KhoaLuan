@@ -48,8 +48,8 @@ public class PlayerClientManager : MonoBehaviour
 
     private void setAttribule(object json)
     {
-        playerClient = new PlayerClient();
-        JsonUtility.FromJsonOverwrite((string)json, playerClient);
+        Debug.Log(json.ToString());
+        playerClient = JsonUtility.FromJson<PlayerClient>((string)json);
         Global.playerClient = playerClient;
         Event.emit(Events.canConnect, null);
     }

@@ -8,7 +8,14 @@ class ChooseCharater(serializers.Serializer):
 class PlayerSeri (serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ("name", "account_id", "score")
+        fields = ("account_id", "name", "level","exp", "fans", "speed", "jump", "shotForce", "point")
         
 class AccountID (serializers.Serializer):
     account_id = serializers.IntegerField()
+    
+class AddPoint (serializers.Serializer):
+    speed = serializers.IntegerField()
+    jump = serializers.IntegerField()
+    shotForce = serializers.IntegerField()
+    point = serializers.IntegerField()
+    _token = serializers.CharField()

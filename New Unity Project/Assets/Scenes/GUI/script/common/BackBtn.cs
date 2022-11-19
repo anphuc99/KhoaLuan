@@ -16,10 +16,4 @@ public class BackBtn : MonoBehaviour
     {
         Event.emit(Events.goBack, null);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

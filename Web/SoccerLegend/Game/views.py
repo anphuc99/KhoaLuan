@@ -4,6 +4,7 @@ from .serializers import resutls, Room, MasterClientOut
 from .models import Game
 from Player.models import Player
 from Account.models import Account
+from Player.serializers import PlayerSeri
 from rest_framework.response import Response
 from rest_framework import status
 import json
@@ -45,67 +46,21 @@ class GameResutls(APIView):
             player.save()
         
         return Response(status=status.HTTP_200_OK)    
-    
-class CreateRoom(APIView):
-    def post(self, req):
-        data = Room(data = req.data)
-        if not data.is_valid():
-            return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)    
-        _token = data["_token"].value
-        roomID = data["roomID"].value 
-        player = Account.objects.get(_token = _token)     
-        room = {
-            "Master": _token,
-            "PlayerList": [],
-            "confirm": 0,
-            "newMaster": 0
-        }
-        Global.setValue(roomID, room)
-        return Response(status=status.HTTP_200_OK)
         
-class JoinRoom(APIView):
-    def post(self, req):
-        data = Room(data = req.data)
-        if not data.is_valid():
-            return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)    
-        _token = data["_token"].value
-        roomID = data["roomID"].value
-        player = Account.objects.get(_token = _token)
-        room = Global.getValue(roomID)
-        room["PlayerList"].append(_token)
-        Global.setValue(roomID,room)
-        return Response(status=status.HTTP_200_OK)
-    
-class MasterClientOutGame(APIView):
-    def post(self, req):
-        data = MasterClientOut(data= req.data)
-        if not data.is_valid():
-            return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)   
-        _token = data["_token"].value
-        roomID = data["roomID"].value
-        newMaster = data["newMaster"].value
-        room = Global.getValue(roomID)
-        if _token in room["PlayerList"]:
-            if room["newMaster"] == 0 or room["newMaster"] == newMaster:
-                room["confirm"] += 1
-                room["newMaster"] = newMaster
-            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)        
-        Global.setValue(roomID,room)
-        return Response(status=status.HTTP_200_OK)
-
-
-class TestSession(APIView):
-    def post(self, req):
-        Global.setValue("abc","lalalal")
-        return Response(status=status.HTTP_200_OK)
+class GetTopRank(APIView):
     def get(self, req):
-        ss = Global.getValue("abc")
-        return Response(data=ss ,status=status.HTTP_200_OK)
+        players = Player.objects.all().order_by('fans').reverse()[:100]
+        playerSeris = []
+        for player in players:
+            playerSeris.append(PlayerSeri(player).data)
+        return Response(data= {"Items": playerSeris}, status= status.HTTP_200_OK)    
     
-def lobby(request):
-    return render(request, 'chat/lobby.html')
-        
-        
+class GetMyRank(APIView):
+    def get(self, req, account_id):
+        players = Player.objects.all().order_by('fans').reverse()[:1000]        
+        myRank = 0
+        for player in players:
+            if player.account_id == account_id:
+                break
+            myRank += 1
+        return Response(data= myRank, status= status.HTTP_200_OK)    

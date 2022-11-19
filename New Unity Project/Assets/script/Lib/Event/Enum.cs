@@ -52,7 +52,12 @@ public static class Events
         onServerCreateRoom = "onServerCreateRoom",
         onServerJoinRoom = "onServerJoinRoom",
         masterCertificate = "masterCertificate",
-        setNewMaster = "setNewMaster";
+        setNewMaster = "setNewMaster",
+        showLeaderboard = "showLeaderboard",
+        showSetting = "showSetting",
+        showProfile = "showProfile",
+        setLanguage = "setLanguage",
+        setMultiplier = "setMultiplier";
 
 }
 public struct SceneName
@@ -65,6 +70,9 @@ public struct SceneName
     public const string Register = "Register";
     public const string LoadStadium = "LoadStadium";
     public const string Stadium = "Stadium";
+    public const string Leaderboard = "Leaderboard";
+    public const string Setting = "Setting";
+    public const string Profile = "Profile";
 }
 
 public class Define
@@ -103,10 +111,9 @@ public struct URL
     public const string account_token = root + "account/token";
     public const string player_chooseCharacter = root + "player/choose-character";
     public const string player_checkPlayer = root + "player/check-player";
-    public const string game_sendGameResutls= root + "game/send-game-resutls";
-    public const string game_createRoom= root + "game/create-room";
-    public const string game_joinRoom= root + "game/join-room";
-    public const string game_masterOutGameRoom= root + "game/master-out-room";
+    public const string player_setMultiplier = root + "player/set-multiplier";
+    public const string game_getTopRank = root + "game/get-top-rank";
+    public const string game_getMyRank = root + "game/get-my-rank";
 }
 
 public struct Value

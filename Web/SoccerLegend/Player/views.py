@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import ChooseCharater, PlayerSeri, AccountID
+from .serializers import ChooseCharater, PlayerSeri, AccountID, AddPoint
 from .models import Player
 from Account.models import Account
 from django.db import IntegrityError
@@ -41,4 +41,32 @@ class CheckPlayerAPI(APIView):
             return Response(data= player.data, status= status.HTTP_200_OK)
         except Player.DoesNotExist:
             return Response(status= status.HTTP_400_BAD_REQUEST)
+        
+class SetMultiplierAPI(APIView):
+    def post(self, request):
+        try:
+            data = AddPoint(data= request.data)
+            if not data.is_valid():
+                print("is_valid")
+                return Response(data="not request", status=status.HTTP_400_BAD_REQUEST)    
+            speed = data["speed"].value
+            jump = data["jump"].value
+            shotForce = data["shotForce"].value
+            point = data["point"].value
+            _token = data["_token"].value            
+            account = Account.objects.get(_token = _token)
+            player = Player.objects.get(account_id = account.id)
+            if speed + jump + shotForce + point == player.level:            
+                player.speed = speed
+                player.jump = jump
+                player.shotForce = shotForce
+                player.point = point
+                player.save()
+            else:
+                print("speed + jump + shotForce + point == player.level")
+                return Response(status= status.HTTP_400_BAD_REQUEST)                          
+            return Response(status= status.HTTP_200_OK)
+        except Account.DoesNotExist:
+            print("Account.DoesNotExist")
+            return Response(status= status.HTTP_400_BAD_REQUEST)  
 

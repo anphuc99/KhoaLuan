@@ -13,4 +13,19 @@ public class LobbyManager : MonoBehaviour
     {
         Event.emit(Events.login, null);
     }
+
+    public void btnLeaderboard_Click()
+    {
+        Event.emit(Events.showLeaderboard, null);
+    }
+
+    public void btnSetting_Click()
+    {
+        Event.emit(Events.showSetting, null);
+    }
+
+    public void btnProfile_Click()
+    {
+        Event.emit(Events.showProfile, null);
+    }
 }

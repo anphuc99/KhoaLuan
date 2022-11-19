@@ -16,6 +16,17 @@ public class GameManager : MonoBehaviour
         Event.register(Events.goToLobby, goToLobby);
         Event.register(Events.createPlayer, createPlayer);
         Event.register(Events.enoughPlayers, enoughPlayers);
+        Event.register(Events.showLeaderboard, showLederboard);
+        Event.register(Events.showSetting, showSetting);
+        Event.register(Events.showProfile, showProfile);
+
+        string clientLang = PlayerPrefs.GetString("Lang");        
+        if (clientLang == null || clientLang == "")
+        {
+            PlayerPrefs.SetString("Lang", "en");
+            clientLang = "en";
+        }
+        Global.clientLang = clientLang;
         //PlayerPrefs.DeleteAll();
     }
     // Start is called before the first frame update
@@ -76,5 +87,29 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadSceneAsync(SceneName.LoadStadium, LoadSceneMode.Additive);
         SceneManager.LoadSceneAsync(SceneName.Stadium, LoadSceneMode.Additive);
         curScene = SceneName.Stadium;
+    }
+
+    public void showLederboard(object context)
+    {
+        if (curScene != null)
+            SceneManager.UnloadSceneAsync(curScene);
+        SceneManager.LoadSceneAsync(SceneName.Leaderboard, LoadSceneMode.Additive);
+        curScene = SceneName.Leaderboard;
+    }
+    
+    public void showSetting(object context)
+    {
+        if (curScene != null)
+            SceneManager.UnloadSceneAsync(curScene);
+        SceneManager.LoadSceneAsync(SceneName.Setting, LoadSceneMode.Additive);
+        curScene = SceneName.Setting;
+    }
+    
+    public void showProfile(object context)
+    {
+        if (curScene != null)
+            SceneManager.UnloadSceneAsync(curScene);
+        SceneManager.LoadSceneAsync(SceneName.Profile, LoadSceneMode.Additive);
+        curScene = SceneName.Profile;
     }
 }

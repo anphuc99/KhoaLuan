@@ -20,7 +20,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void goBack(object context)
     {
-        PhotonNetwork.Disconnect();        
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Disconnect();        
+        }
     }
 
     public override void OnConnectedToMaster()

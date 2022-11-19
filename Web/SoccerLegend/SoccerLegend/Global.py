@@ -30,7 +30,7 @@ class Global:
         except Exception as e:
             raise Exception(e)
     
-    def setValue(key, value, expire = 300):
+    def setValue(key, value, expire = 84600):
         try:
             file = open("Global/"+key+".json","w+")
             JsonData = json.dumps(value)

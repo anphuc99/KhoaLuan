@@ -4,11 +4,12 @@ from asgiref.sync import async_to_sync
 from threading import Timer
 from datetime import datetime
 from Account.models import Account
+from Player.models import Player
 from SoccerLegend.Global import Global
 from .models import Game, GameInfo
 from django.db import transaction
 import random
-
+import math
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -204,8 +205,47 @@ class ChatConsumer(WebsocketConsumer):
                 PlayerTeam = room["PlayerTeam"]
                 for player in PlayerTeam:
                     GameInfo.objects.create(gameID = game.id, playerID = player["account_id"], team = player["team"])
+                self.setFansPlayer(redScore= redScore, blueScore= blueScore, playerTeams= PlayerTeam)
                 self.sendRoom(self.roomID, {
                     "type": "endGame",
                     "data": room["MasterClientID"]
-                })      
-
+                })     
+    
+    def setFansPlayer(self, redScore, blueScore, playerTeams):
+        for playerTeam in playerTeams:
+            player = Player.objects.get(account_id = playerTeam["account_id"])
+            if redScore > blueScore:
+                if playerTeam["team"] == 0:
+                    player.fans += 100
+                    self.addExp(player= player, exp= 80)
+                    player.save()
+                else:
+                    player.fans = max(player.fans - 50, 0)
+                    self.addExp(player= player, exp= 20)
+                    player.save()
+            elif blueScore > redScore:
+                if playerTeam["team"] == 1:
+                    player.fans += 100
+                    self.addExp(player= player, exp= 80)
+                    player.save()
+                else:
+                    player.fans = max(player.fans - 50, 0)
+                    self.addExp(player= player, exp= 20)
+                    player.save()
+            else:
+                self.addExp(player= player, exp= 50)
+    
+    def addExp(self, player, exp):
+        if player.level < 30:
+            player.exp += exp
+            if player.exp >= math.floor(1.4**(player.level-1) + 800):
+                player.level += 1
+                if player.level < 30:
+                    player.exp -= math.floor(1.4**player.level + 800)
+                else:
+                    player.exp = 0                
+                player.point += 1
+                    
+            
+    
+                    

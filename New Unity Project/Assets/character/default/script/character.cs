@@ -9,14 +9,8 @@ public class character : MonoBehaviour
     [Tooltip("Maximum slope the character can jump on")]
     [Range(5f, 60f)]
     public float slopeLimit = 45f;
-    [Tooltip("Move speed in meters/second")]
-    public float moveSpeed = 5f;
-    [Tooltip("Turn speed in degrees/second, left (+) or right (-)")]
-    public float turnSpeed = 300;
     [Tooltip("Whether the character can jump")]
-    public bool allowJump = false;
-    [Tooltip("Upward speed to apply when jumping in meters/second")]
-    public float jumpSpeed = 4f;
+    public bool allowJump = true; 
 
     public bool IsGrounded { get; private set; }
     public float ForwardInput { get; set; }
@@ -27,6 +21,7 @@ public class character : MonoBehaviour
     private CapsuleCollider capsuleCollider;
     private Animator animator;
     private PhotonView photonView;
+    private BaseAttribute baseAttribute;
 
     private void Awake()
     {
@@ -34,6 +29,7 @@ public class character : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider>();
         animator = GetComponent<Animator>();
         photonView = GetComponent<PhotonView>();
+        baseAttribute = GetComponent<BaseAttribute>();
 
         if (!photonView.IsMine) return;
         Camera camera = Camera.main;
@@ -50,6 +46,10 @@ public class character : MonoBehaviour
         if (!photonView.IsMine) return;
         TurnInput = Input.GetAxis("Horizontal");
         ForwardInput = Input.GetAxis("Vertical");
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            JumpInput = true;
+        }
         CheckGrounded();
         ProcessActions();
     }
@@ -93,13 +93,15 @@ public class character : MonoBehaviour
             if (JumpInput && allowJump)
             {
                 // Apply an upward velocity to jump
-                rigidbody.velocity += Vector3.up * jumpSpeed;
+                rigidbody.velocity += Vector3.up * baseAttribute.jumpSpeed/10;
+                animator.SetBool("jumpUp", true);
+                JumpInput = false;
             }
 
             // Apply a forward or backward velocity based on player input
             Vector3 velocity = transform.forward * Mathf.Clamp(ForwardInput, -1f, 1f) + transform.right * Mathf.Clamp(TurnInput, -1f, 1f);
 
-            rigidbody.velocity += velocity * moveSpeed;
+            rigidbody.velocity += velocity * (baseAttribute.moveSpeed/100);
 
             if (velocity != Vector3.zero)
             {
@@ -108,14 +110,7 @@ public class character : MonoBehaviour
             else
             {
                 animator.SetBool("run", false);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                rigidbody.velocity += Vector3.up * jumpSpeed;
-                animator.SetBool("jumpUp", true);
-
-            }
+            }            
         }        
     }
 }

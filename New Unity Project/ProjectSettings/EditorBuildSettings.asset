@@ -32,4 +32,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GUI/ChooseCharater.unity
     guid: f8c490b0bf500e5458f71b3e3ccd673a
+  - enabled: 1
+    path: Assets/Scenes/GUI/Leaderboard.unity
+    guid: 60122cfe6e9a44f42ba6158fdae3b211
+  - enabled: 1
+    path: Assets/Scenes/GUI/Setting.unity
+    guid: ccc273eb1c6e9df4794d89e192a17802
+  - enabled: 1
+    path: Assets/Scenes/GUI/Profile.unity
+    guid: be56ca243b68fbc49ab3a6636f5c12d5
   m_configObjects: {}
