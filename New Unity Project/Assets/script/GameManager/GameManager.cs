@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
         Event.register(Events.showLeaderboard, showLederboard);
         Event.register(Events.showSetting, showSetting);
         Event.register(Events.showProfile, showProfile);
+        Event.register(Events.showHistory, showHistory);
+        Event.register(Events.showResult, showResult);
 
         string clientLang = PlayerPrefs.GetString("Lang");        
         if (clientLang == null || clientLang == "")
@@ -111,5 +113,21 @@ public class GameManager : MonoBehaviour
             SceneManager.UnloadSceneAsync(curScene);
         SceneManager.LoadSceneAsync(SceneName.Profile, LoadSceneMode.Additive);
         curScene = SceneName.Profile;
+    }
+
+    public void showHistory(object context)
+    {
+        if (curScene != null)
+            SceneManager.UnloadSceneAsync(curScene);
+        SceneManager.LoadSceneAsync(SceneName.History, LoadSceneMode.Additive);
+        curScene = SceneName.History;
+    }
+    
+    public void showResult(object context)
+    {
+        if (curScene != null)
+            SceneManager.UnloadSceneAsync(curScene);
+        SceneManager.LoadSceneAsync(SceneName.Result, LoadSceneMode.Additive);
+        curScene = SceneName.Result;
     }
 }

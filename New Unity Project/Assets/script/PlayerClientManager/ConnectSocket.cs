@@ -81,7 +81,9 @@ public class ConnectSocket : MonoBehaviour
 
     private void endGame(object context)
     {
-        Event.emit(Events.goBack, null);
+        int gameID = int.Parse(context.ToString());
+        Global.gameID = gameID;
+        Event.emit(Events.showResult, null);
     }
 
     private void onCreateRoom(object roomid)

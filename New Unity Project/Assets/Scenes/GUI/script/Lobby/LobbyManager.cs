@@ -28,4 +28,9 @@ public class LobbyManager : MonoBehaviour
     {
         Event.emit(Events.showProfile, null);
     }
+
+    public void btnHistory_Click()
+    {
+        Event.emit(Events.showHistory, null);
+    }
 }

@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceee504764f55604bb2b603b933e2845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxPlayers: 1
+  MaxPlayers: 2
   WaitForGame: 3
   TimeGame: 300
   TimeOver: 3

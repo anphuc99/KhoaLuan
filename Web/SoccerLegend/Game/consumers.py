@@ -204,11 +204,16 @@ class ChatConsumer(WebsocketConsumer):
                 game = Game.objects.create(redScore = redScore, blueScore = blueScore, master = accountMaster.id)
                 PlayerTeam = room["PlayerTeam"]
                 for player in PlayerTeam:
-                    GameInfo.objects.create(gameID = game.id, playerID = player["account_id"], team = player["team"])
+                    playerDB = Player.objects.get(account_id = player["account_id"])
+                    GameInfo.objects.create(gameID = game.id, 
+                                            playerID = player["account_id"], 
+                                            team = player["team"],
+                                            name = playerDB.name,
+                                            level = playerDB.level)
                 self.setFansPlayer(redScore= redScore, blueScore= blueScore, playerTeams= PlayerTeam)
                 self.sendRoom(self.roomID, {
                     "type": "endGame",
-                    "data": room["MasterClientID"]
+                    "data": str(game.id)
                 })     
     
     def setFansPlayer(self, redScore, blueScore, playerTeams):

@@ -8,6 +8,19 @@ public class ChooseCharater : MonoBehaviour
 {
     private string name;
     private string _token;
+    public Animator animator;
+    private void Start()
+    {
+        StartCoroutine(setAnim());
+    }
+
+    IEnumerator setAnim()
+    {
+        animator.SetBool("jumpUp", true);
+        animator.SetTrigger("jumpDown");
+        yield return new WaitForSeconds(1);
+        animator.SetBool("jumpUp", false);
+    }
     public void btnStart_Click()
     {
         transform.Find("Dialog").gameObject.SetActive(true);

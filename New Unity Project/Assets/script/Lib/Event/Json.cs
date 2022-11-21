@@ -43,4 +43,44 @@ namespace Json
         public string roomID;
         public string clientID;
     }
+
+    [Serializable]
+    public class HistoryInfo
+    {
+        public int gameID;
+        public int playerID;
+        public int team;
+        public int redScore;
+        public int blueScore;
+        public string date;
+        public int result;
+    }
+
+    [Serializable]
+    public class Game
+    {
+        public int id;
+        public int redScore;
+        public int blueScore;
+        public int master;
+        public string date;
+    }
+
+    [Serializable]
+    public class GameInfo
+    {
+        public int id;
+        public int gameID;
+        public int playerID;
+        public int team;
+        public string name;
+        public string level;
+    }
+
+    [Serializable]
+    public class GetGameInfo
+    {
+        public Game game;
+        public GameInfo[] gameInfo;
+    }
 }

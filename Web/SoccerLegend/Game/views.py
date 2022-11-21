@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .serializers import resutls, Room, MasterClientOut
-from .models import Game
+from .models import Game, GameInfo
 from Player.models import Player
 from Account.models import Account
 from Player.serializers import PlayerSeri
@@ -10,8 +10,21 @@ from rest_framework import status
 import json
 from types import SimpleNamespace
 from SoccerLegend.Global import Global
+from django.db import connection
 
 # Create your views here.
+
+def cursor_to_dict(cursor):
+    columns = [column[0] for column in cursor.description]
+    data = []
+    for row in cursor.fetchall():
+        rowIndex = 0
+        rowData = {}
+        for column in columns:
+            rowData[column] = row[rowIndex]
+            rowIndex += 1
+        data.append(rowData)
+    return data
 
 class GameResutls(APIView):
     def post(self, req):
@@ -64,3 +77,15 @@ class GetMyRank(APIView):
                 break
             myRank += 1
         return Response(data= myRank, status= status.HTTP_200_OK)    
+    
+class GetHistory(APIView):
+    def get(self, req, account_id):
+        cursor = connection.cursor()
+        cursor.execute("CALL GetHistory("+str(account_id)+")")
+        return Response(data= {"Items": cursor_to_dict(cursor=cursor)},status= status.HTTP_200_OK)  
+    
+class GetResultGame(APIView):
+    def get(self, req, game_id):
+        gameInfo = GameInfo.objects.filter(gameID = game_id).values()
+        game = Game.objects.filter(id = game_id).values()
+        return Response(data= {"game":game[0], "gameInfo": gameInfo},status= status.HTTP_200_OK)  

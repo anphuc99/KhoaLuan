@@ -56,6 +56,8 @@ public static class Events
         showLeaderboard = "showLeaderboard",
         showSetting = "showSetting",
         showProfile = "showProfile",
+        showHistory = "showHistory",
+        showResult = "showResult",
         setLanguage = "setLanguage",
         setMultiplier = "setMultiplier";
 
@@ -73,6 +75,8 @@ public struct SceneName
     public const string Leaderboard = "Leaderboard";
     public const string Setting = "Setting";
     public const string Profile = "Profile";
+    public const string History = "History";
+    public const string Result = "Result";
 }
 
 public class Define
@@ -114,6 +118,8 @@ public struct URL
     public const string player_setMultiplier = root + "player/set-multiplier";
     public const string game_getTopRank = root + "game/get-top-rank";
     public const string game_getMyRank = root + "game/get-my-rank";
+    public const string game_getHistory = root + "game/get-history";
+    public const string game_getGameInfo = root + "game/get-game-info";
 }
 
 public struct Value

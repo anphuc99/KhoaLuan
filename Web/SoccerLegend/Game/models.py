@@ -11,3 +11,5 @@ class GameInfo(models.Model):
     gameID = models.IntegerField()
     playerID = models.IntegerField()
     team = models.IntegerField()
+    name = models.CharField(max_length=100, default = "")
+    level = models.IntegerField(default = 0)

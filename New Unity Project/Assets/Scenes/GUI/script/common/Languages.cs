@@ -14,7 +14,7 @@ public class Languages : MonoBehaviour
     private TextMeshProUGUI tmp;
     private Dictionary<string, TMP_FontAsset> fontLangs = new Dictionary<string, TMP_FontAsset>();
     private Dictionary<string, Material> materialLangs = new Dictionary<string, Material>();
-    private string langCSVPath = "/Lang/Lang.csv";
+    private string langCSVPath = "Lang/Lang";
     private string curLang;
 
     private int eventID;
@@ -46,13 +46,20 @@ public class Languages : MonoBehaviour
     {
         curLang = PlayerPrefs.GetString("Lang");
         Debug.Log(curLang);
-        List<Dictionary<string, string>> list = CsvHelper.fromCsv(Application.dataPath + langCSVPath);
+        List<Dictionary<string, string>> list = CsvHelper.fromCsv(langCSVPath);
         foreach (Dictionary<string, string> pair in list)
         {
-            if (pair["key"] == key)
+            try
             {
-                tmp.text = pair[curLang];
-                break;
+                if (pair["key"] == key)
+                {
+                    tmp.text = pair[curLang];
+                    break;
+                }
+
+            }
+            catch
+            {
             }
         }
         setFont();
