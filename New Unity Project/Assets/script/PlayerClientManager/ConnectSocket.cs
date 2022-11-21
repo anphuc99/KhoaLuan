@@ -81,6 +81,10 @@ public class ConnectSocket : MonoBehaviour
 
     private void endGame(object context)
     {
+        if(PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Disconnect();
+        }            
         int gameID = int.Parse(context.ToString());
         Global.gameID = gameID;
         Event.emit(Events.showResult, null);
