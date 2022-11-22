@@ -6,16 +6,19 @@ using System.Linq;
 
 public class Ball : MonoBehaviourPunCallbacks
 {
-    public int force;
+    public AudioClip start;
+    public AudioClip intoGold;
+    public AudioClip touchBall;
     private int eventID;
     private int eventID2;
     private Queue<KeyValuePair<Vector3, Quaternion>> queuePoss = new Queue<KeyValuePair<Vector3, Quaternion>>();
-    public bool IsMine;
+    private bool IsMine = false;
 
     private void Awake()
     {
         eventID = Event.register(Events.onGameStart, onGameStart);
         eventID2 = Event.register(Events.onGameRestart, onGameStart);
+        IsMine = PhotonNetwork.IsMasterClient;
     }
 
     private void FixedUpdate()
@@ -63,6 +66,7 @@ public class Ball : MonoBehaviourPunCallbacks
             GetComponent<Renderer>().enabled = true;
             Rigidbody rb = GetComponent<Rigidbody>();
             rb.useGravity = true;
+            Event.emit(Events.playSound, start);
         }
     }
 
@@ -79,6 +83,10 @@ public class Ball : MonoBehaviourPunCallbacks
             rb.AddForce(force*attribute.shotForce*10);
             IsMine = true;
             photonView.RPC(nameof(changeOwner), RpcTarget.Others);
+        }
+        if (collision.gameObject.tag == "Player")
+        {
+            Event.emit(Events.playSound, touchBall);
         }
     }
 
@@ -117,6 +125,7 @@ public class Ball : MonoBehaviourPunCallbacks
                 photonView.RPC(nameof(changeOwner), RpcTarget.Others);
             }
             Global.state = State.gamePause;
+            Event.emit(Events.playSound, intoGold);
         }
     }
 

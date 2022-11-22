@@ -1972,6 +1972,18 @@ PrefabInstance:
       propertyPath: ObservedComponents.Array.data[2]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4147623582498528495, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
+      propertyPath: start
+      value: 
+      objectReference: {fileID: 8300000, guid: 552c9a3e3422d5647b7b58cfb8558e29, type: 3}
+    - target: {fileID: 4147623582498528495, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
+      propertyPath: intoGold
+      value: 
+      objectReference: {fileID: 8300000, guid: 732bee5f97e4b6943a86f90793387285, type: 3}
+    - target: {fileID: 4147623582498528495, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
+      propertyPath: touchBall
+      value: 
+      objectReference: {fileID: 8300000, guid: c09f933195f670e48af76ea0406a533a, type: 3}
     - target: {fileID: 4147623582498623993, guid: 3fda697253cc5774da95675419e2cda8, type: 3}
       propertyPath: m_RootOrder
       value: 0

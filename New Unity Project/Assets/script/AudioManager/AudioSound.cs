@@ -29,8 +29,7 @@ public class AudioSound : MonoBehaviour
     }
 
     private void playSound(object clip)
-    {
-        if (PlayerPrefs.HasKey("stopSound") && PlayerPrefs.GetInt("stopSound") == 1) return;
+    {        
         audioSource.clip = clip as AudioClip;
         audioSource.Play();
     }

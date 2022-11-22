@@ -15,7 +15,6 @@ public class AudioMusic : MonoBehaviour
         Event.register(Events.goToGame, playeStadiumSound);
         Event.register(Events.endGame, playLobbySound);
         Event.register(Events.setVolumeMusic, setVolumeMusic);
-        Event.register(Events.stopSound, stopSound);
     }
 
     void Start()
@@ -24,7 +23,6 @@ public class AudioMusic : MonoBehaviour
         audioSource.clip = lobby;
         audioSource.Play();
         setVolumeMusic(null);
-        stopSound(null);
     }
 
     public void playLobbySound(object context)
@@ -55,11 +53,5 @@ public class AudioMusic : MonoBehaviour
         {
             audioSource.volume = PlayerPrefs.HasKey("volumeMusic") ? PlayerPrefs.GetFloat("volumeMusic") : 1;
         }
-    }
-
-    public void stopSound(object context)
-    {
-        int stopAudio = PlayerPrefs.HasKey("stopAudio")?PlayerPrefs.GetInt("stopAudio") : 0;
-        audioSource.enabled = stopAudio == 0;
     }
 }

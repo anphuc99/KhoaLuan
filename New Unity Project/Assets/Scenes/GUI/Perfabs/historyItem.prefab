@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 2184167721730009036}
   - component: {fileID: 3218034659699237125}
   - component: {fileID: 6270299486176855556}
+  - component: {fileID: 362892063405102503}
   m_Layer: 5
   m_Name: historyItem
   m_TagString: Untagged
@@ -441,6 +442,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &362892063405102503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8377442996546761864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a1dce83050604449c896a5a3e1cabb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 6f48ebc1502a4e744b2972cf36f56b76, type: 3}
 --- !u!1 &9192855552899979790
 GameObject:
   m_ObjectHideFlags: 0
