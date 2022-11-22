@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Assets.script.Lib;
 
 public class SetMulti : MonoBehaviour
 {
@@ -39,7 +40,15 @@ public class SetMulti : MonoBehaviour
         TextMeshProUGUI textMeshProUGUI = null;
         if (TryGetComponent<TextMeshProUGUI>(out textMeshProUGUI))
         {
-            textMeshProUGUI.text = playerClient[multiplier].ToString();
+            if (multiplier == "fans")
+            {
+                StringShortenNumber shorten = new StringShortenNumber((int)playerClient[multiplier]);
+                textMeshProUGUI.text = shorten.text;
+            }
+            else
+            {
+                textMeshProUGUI.text = playerClient[multiplier].ToString();
+            }
         }
         Slider slider = null;
         if (TryGetComponent<Slider>(out slider))

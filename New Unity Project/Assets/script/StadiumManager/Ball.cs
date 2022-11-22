@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Linq;
 
 public class Ball : MonoBehaviourPunCallbacks
 {
     public int force;
     private int eventID;
     private int eventID2;
+    private Queue<KeyValuePair<Vector3, Quaternion>> queuePoss = new Queue<KeyValuePair<Vector3, Quaternion>>();
+    public bool IsMine;
 
     private void Awake()
     {
@@ -15,29 +18,74 @@ public class Ball : MonoBehaviourPunCallbacks
         eventID2 = Event.register(Events.onGameRestart, onGameStart);
     }
 
-    private void onGameStart(object context)
+    private void FixedUpdate()
     {
-        if (Global.state != State.gameStart) return;
-        transform.position = new Vector3(0,6,-50);
-        Collider sphereCollider = GetComponent<Collider>();
-        sphereCollider.enabled = true;
-        GetComponent<Renderer>().enabled = true;
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.useGravity = true;
+        if (IsMine)
+        {
+            photonView.RPC(nameof(BallMove), RpcTarget.Others, transform.position, transform.rotation);
+            queuePoss.Clear();
+        }            
+        else
+        {
+            if (queuePoss.Count > 0)
+            {
+                if (queuePoss.Count > 50)
+                {
+                    KeyValuePair<Vector3, Quaternion> dic = queuePoss.LastOrDefault();
+                    transform.position = dic.Key;
+                    transform.rotation = dic.Value;
+                }
+                else
+                {
+                    KeyValuePair<Vector3, Quaternion> dic = queuePoss.Dequeue();
+                    transform.position = dic.Key;
+                    transform.rotation = dic.Value;
+                }
+            }
+        }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    [PunRPC]
+    private void BallMove(Vector3 pos, Quaternion rot)
     {
-        //if (!PhotonNetwork.IsMasterClient) return;
-        if (Global.state != State.gameStart) return;
-        if (collision.gameObject.tag == "Player")
+        KeyValuePair<Vector3, Quaternion> keyValuePair = new KeyValuePair<Vector3, Quaternion>(pos, rot);
+        queuePoss.Enqueue(keyValuePair);
+    }
+
+    private void onGameStart(object context)
+    {
+        if (Global.state == State.gameStart)
         {
-            photonView.TransferOwnership(collision.gameObject.GetComponent<PhotonView>().Owner);
+            queuePoss.Clear();
+            transform.position = new Vector3(0, 6, -50);
+            Collider sphereCollider = GetComponent<Collider>();
+            sphereCollider.enabled = true;
+            GetComponent<Renderer>().enabled = true;
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.useGravity = true;
+        }
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {        
+        if (Global.state != State.gameStart) return;
+        if (collision.gameObject.tag == "Player" && collision.gameObject.GetComponent<PhotonView>().IsMine)
+        {            
+            queuePoss.Clear();
             Rigidbody rb = GetComponent<Rigidbody>();
             Vector3 force = transform.position - collision.transform.position;
             BaseAttribute attribute = collision.gameObject.GetComponent<BaseAttribute>();
             rb.AddForce(force*attribute.shotForce*10);
+            IsMine = true;
+            photonView.RPC(nameof(changeOwner), RpcTarget.Others);
         }
+    }
+
+    [PunRPC]
+    private void changeOwner()
+    {
+        IsMine = false;
     }
 
 
@@ -61,10 +109,12 @@ public class Ball : MonoBehaviourPunCallbacks
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Collider>().enabled = false;
-            photonView.TransferOwnership(PhotonNetwork.MasterClient);
+            photonView.TransferOwnership(PhotonNetwork.MasterClient);            
             if (PhotonNetwork.IsMasterClient)
             {
                 StartCoroutine(waitGameRestart());
+                IsMine = true;
+                photonView.RPC(nameof(changeOwner), RpcTarget.Others);
             }
             Global.state = State.gamePause;
         }

@@ -16,7 +16,7 @@ class ChooseCharaterAPI(APIView):
         _token = data.data["_token"]
         name = data.data["name"]
         if not self.checkName(name= name):
-            return Response(data=dict(msg = "Name_exists"), status= status.HTTP_400_BAD_REQUEST)
+            return Response(data=dict(msg = "name_exists"), status= status.HTTP_400_BAD_REQUEST)
         account = Account.objects.get(_token = _token)
         player = Player.objects.create(account_id = account.id, name = name)
         player = PlayerSeri(player)
@@ -63,7 +63,6 @@ class SetMultiplierAPI(APIView):
                 player.point = point
                 player.save()
             else:
-                print("speed + jump + shotForce + point == player.level")
                 return Response(status= status.HTTP_400_BAD_REQUEST)                          
             return Response(status= status.HTTP_200_OK)
         except Account.DoesNotExist:

@@ -59,7 +59,11 @@ public static class Events
         showHistory = "showHistory",
         showResult = "showResult",
         setLanguage = "setLanguage",
-        setMultiplier = "setMultiplier";
+        setMultiplier = "setMultiplier",
+        setVolumeMusic = "setVolumeMusic",
+        stopSound = "stopSound",
+        setVolumeSound = "setVolumeSound",
+        playSound = "playSound";
 
 }
 public struct SceneName

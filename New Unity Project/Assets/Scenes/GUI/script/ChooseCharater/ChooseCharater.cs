@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using TMPro;
+using Assets.script.Lib;
 
 public class ChooseCharater : MonoBehaviour
 {
     private string name;
     private string _token;
     public Animator animator;
+    public TextMeshProUGUI msgText;
     private void Start()
     {
         StartCoroutine(setAnim());
@@ -46,7 +49,8 @@ public class ChooseCharater : MonoBehaviour
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.Log(www.error);
-                setMsgError(www.error);
+                Json.Msg msg = JsonUtility.FromJson<Json.Msg>(www.downloadHandler.text);
+                setMsgError(msg.msg);
             }
             else
             {
@@ -59,6 +63,6 @@ public class ChooseCharater : MonoBehaviour
 
     private void setMsgError(string msg)
     {
-
+        msgText.text = Lang.toText(msg);
     }
 }

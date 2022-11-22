@@ -85,9 +85,10 @@ public class ConnectSocket : MonoBehaviour
         {
             PhotonNetwork.Disconnect();
         }            
-        int gameID = int.Parse(context.ToString());
-        Global.gameID = gameID;
+        Json.EndGame endGame = JsonUtility.FromJson<Json.EndGame>((string)context);
+        Global.gameID = endGame.gameID;
         Event.emit(Events.showResult, null);
+        Event.emit(Events.setAttribule, endGame.player);
     }
 
     private void onCreateRoom(object roomid)

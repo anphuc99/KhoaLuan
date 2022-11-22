@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.script.Player;
 using UnityEngine.UI;
+using Assets.script.Lib;
 
 public class LeaderboardItem : MonoBehaviour
 {
@@ -43,7 +44,8 @@ public class LeaderboardItem : MonoBehaviour
             rank.gameObject.SetActive(true);
         }
         transform.Find("name").GetComponent<Text>().text = name;
-        transform.Find("fans_count").GetComponent<Text>().text = fans.ToString();
+        StringShortenNumber shorten = new StringShortenNumber(fans);
+        transform.Find("fans_count").GetComponent<Text>().text = shorten.text;
         transform.Find("bgAvatar/level/Text").GetComponent<Text>().text = level.ToString();
     }
 }

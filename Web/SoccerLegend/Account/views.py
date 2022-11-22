@@ -20,12 +20,12 @@ class RegisterAPI(APIView):
         if not mydata.is_valid():
             return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)      
         if not self.CheckUserName(username= mydata.data["username"]):
-            return Response(data=dict(msg = "Account_exists"), status=status.HTTP_400_BAD_REQUEST)
+            return Response(data=dict(msg = "account_exists"), status=status.HTTP_400_BAD_REQUEST)
         try:
             data = self.AddAcount(mydata.data)
             return Response(data=data.data, status=status.HTTP_200_OK)
         except IntegrityError as e:           
-            return Response(data="Has_error", status=status.HTTP_400_BAD_REQUEST)  
+            return Response(data=dict(msg = "has_error"), status=status.HTTP_400_BAD_REQUEST)  
     
     def CheckUserName(self, username):
         try:
@@ -51,9 +51,8 @@ class LoginAPI(APIView):
             return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)   
         username = loginData.data["username"]
         password = hashlib.md5(loginData.data["password"].encode('utf-8')).hexdigest()
-        print(password)
         if not self.checkLogin(username= username, password= password):
-            return Response(data=dict(msg = "Login_fail"), status=status.HTTP_400_BAD_REQUEST)            
+            return Response(data=dict(msg = "login_fail"), status=status.HTTP_400_BAD_REQUEST)            
         else:
             account = SeriAccount(self.getToken(username= username))
             return Response(data=account.data, status=status.HTTP_200_OK)

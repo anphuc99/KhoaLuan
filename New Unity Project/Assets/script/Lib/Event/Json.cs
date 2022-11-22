@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.script.Player;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,5 +83,18 @@ namespace Json
     {
         public Game game;
         public GameInfo[] gameInfo;
+    }
+
+    [Serializable]
+    public class EndGame
+    {
+        public int gameID;
+        public string player;
+    }
+
+    [Serializable]
+    public class Msg
+    {
+        public string msg;
     }
 }

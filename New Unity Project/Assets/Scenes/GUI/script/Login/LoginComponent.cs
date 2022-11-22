@@ -1,9 +1,11 @@
+using Assets.script.Lib;
 using Assets.script.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using TMPro;
 
 public class LoginComponent : MonoBehaviour
 {
@@ -36,7 +38,8 @@ public class LoginComponent : MonoBehaviour
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.Log(www.error);
-                setMsgError(www.error);
+                Json.Msg msg = JsonUtility.FromJson<Json.Msg>(www.downloadHandler.text);
+                setMsgError(msg.msg);
             }
             else
             {
@@ -50,6 +53,6 @@ public class LoginComponent : MonoBehaviour
 
     private void setMsgError(string msg)
     {
-
+        transform.Find("msg").GetComponent<TextMeshProUGUI>().text = Lang.toText(msg);
     }
 }

@@ -23,3 +23,11 @@ victory,Chiến thắng,Victory
 draw,Hòa,Draw
 defeat,Thất bại,Defeat
 contimue,Tiếp tục,Contimue
+login_fail,Tên đăng nhập hoặc mật khẩu không chính xác,Username or password incorrect
+comfim_password_incorrect,Xác nhận mật khẩu không chính xác,Confirm password is incorrect
+email_incorrect,Email không hợp lệ,Invalid email
+account_exists,Tên đăng nhập đã tồn tại,Username available
+has_error,Có lỗi đã xảy ra,An error has occurred
+name_exists,Tên này đã tồn tại,This name already exists
+wait_for_player,Đợi người chơi…,Wait for player…
+comfim,Xác nhận,Comfim

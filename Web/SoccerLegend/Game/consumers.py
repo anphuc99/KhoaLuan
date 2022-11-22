@@ -6,6 +6,7 @@ from datetime import datetime
 from Account.models import Account
 from Player.models import Player
 from SoccerLegend.Global import Global
+from Player.serializers import PlayerSeri
 from .models import Game, GameInfo
 from django.db import transaction
 import random
@@ -211,10 +212,22 @@ class ChatConsumer(WebsocketConsumer):
                                             name = playerDB.name,
                                             level = playerDB.level)
                 self.setFansPlayer(redScore= redScore, blueScore= blueScore, playerTeams= PlayerTeam)
-                self.sendRoom(self.roomID, {
-                    "type": "endGame",
-                    "data": str(game.id)
-                })     
+
+                async_to_sync(self.channel_layer.group_send)(
+                    self.roomID, {
+                        "type": "sendNewAttribule",
+                        "gameID": game.id
+                    })    
+                
+    def sendNewAttribule(self, event):
+        account = Account.objects.get(_token = self._token)
+        player = Player.objects.get(account_id = account.id)
+        playerSeri = PlayerSeri(player)
+        print("aaaaaa"+json.dumps(playerSeri.data))
+        self.send(json.dumps({
+            "type": "endGame",
+            "data": json.dumps({"player": json.dumps(playerSeri.data), "gameID": event["gameID"]})
+        }))
     
     def setFansPlayer(self, redScore, blueScore, playerTeams):
         for playerTeam in playerTeams:
@@ -250,6 +263,7 @@ class ChatConsumer(WebsocketConsumer):
                 else:
                     player.exp = 0                
                 player.point += 1
+                
                     
             
     

@@ -66,6 +66,7 @@ public class Leaderboard : MonoBehaviour
             leaderboardItem1.rank = i;
             leaderboardItem1.name = playerClient.name;
             leaderboardItem1.fans = playerClient.fans;
+            leaderboardItem1.level = playerClient.level;
             leaderboardItem1.transform.parent = this.content.transform;
             leaderboardItem1.transform.localScale = Vector3.one;
             i++;

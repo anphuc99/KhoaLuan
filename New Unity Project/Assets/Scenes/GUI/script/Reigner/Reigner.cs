@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Windows;
+using TMPro;
+using Assets.script.Lib;
 
 public class Reigner : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class Reigner : MonoBehaviour
     private string email;
     private string username;
     private string password;
+    private string comfimPassword;
     public void btnNext_Click()
     {
         transform.Find("table").gameObject.SetActive(false);
@@ -29,7 +32,7 @@ public class Reigner : MonoBehaviour
     {
         try
         {
-            string[] tbs = { "table/tbName", "table/tbEmail", "table2/tbUserName", "table2/tbPassword" };
+            string[] tbs = { "table/tbName", "table/tbEmail", "table2/tbUserName", "table2/tbPassword", "table2/tbComfimPassword" };
             transform.Find("table").gameObject.SetActive(true);
             foreach (string s in tbs)
             {
@@ -50,14 +53,19 @@ public class Reigner : MonoBehaviour
                     case "table2/tbPassword":
                         password = text.text;
                         break;
+                    case "table2/tbComfimPassword":
+                        comfimPassword = text.text;
+                        break;
                 }
                 transform.Find("table").gameObject.SetActive(false);
             }
-            comfimPassword();
+            checkEmail();
+            ComfimPassword();
             StartCoroutine(register());
         }
         catch(Exception e)
         {
+            Debug.Log(e.Message);
             setMsgError(e.Message);
         }
     }
@@ -77,7 +85,8 @@ public class Reigner : MonoBehaviour
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.Log(www.error);
-                setMsgError(www.error);
+                Json.Msg msg = JsonUtility.FromJson<Json.Msg>(www.downloadHandler.text);
+                setMsgError(msg.msg);
             }
             else
             {
@@ -90,13 +99,34 @@ public class Reigner : MonoBehaviour
             }
         }
     }
-    public void comfimPassword()
-    {
 
+    public void checkEmail()
+    {
+        var trimmedEmail = email.Trim();
+
+        if (trimmedEmail.EndsWith("."))
+        {
+            throw new Exception("email_incorrect");
+        }
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+        }
+        catch
+        {
+            throw new Exception("email_incorrect");
+        }
+    }
+    public void ComfimPassword()
+    {
+        if (password != comfimPassword)
+        {
+            throw new Exception("comfim_password_incorrect");
+        }
     }
 
     public void setMsgError(string msg)
     {
-
+        transform.Find("table2/msg").GetComponent<TextMeshProUGUI>().text = Lang.toText(msg);
     }
 }
