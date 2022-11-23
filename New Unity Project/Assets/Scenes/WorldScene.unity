@@ -210,10 +210,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxPlayers: 1
-  WaitForGame: 3
+  WaitForGame: 15
   TimeGame: 300
-  TimeOver: 3
-  scoreWin: 1
+  TimeOver: 30
+  scoreWin: 5
   quaternionsTeam:
   - {x: 0, y: 0, z: 0, w: 1}
   - {x: 0, y: 1, z: 0, w: 0}

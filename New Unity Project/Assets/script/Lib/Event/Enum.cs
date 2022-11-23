@@ -81,6 +81,7 @@ public struct SceneName
     public const string Profile = "Profile";
     public const string History = "History";
     public const string Result = "Result";
+    public const string LoadGame = "LoadGame";
 }
 
 public class Define

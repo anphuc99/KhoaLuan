@@ -49,7 +49,6 @@ public class SocketManager : MonoBehaviour
     {
         Debug.Log("Close connect socket");
         IsConnected = false;
-        Application.Quit();
     }
 
     private void Close(object context){

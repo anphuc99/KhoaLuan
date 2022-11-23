@@ -2624,6 +2624,7 @@ GameObject:
   - component: {fileID: 1044340959}
   - component: {fileID: 1044340961}
   - component: {fileID: 1044340960}
+  - component: {fileID: 1044340962}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2645,10 +2646,10 @@ RectTransform:
   m_Father: {fileID: 457916018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.6, y: 10.9}
-  m_SizeDelta: {x: 300, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 18}
+  m_SizeDelta: {x: 0, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1044340960
 MonoBehaviour:
@@ -2672,8 +2673,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Accept
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5e28170110e3da6479b31039f830a299, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 525009454b3e6714085dc62440fce6a3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3cb60bb453052804db5278b968dbfeb6, type: 2}
+  m_sharedMaterial: {fileID: 351753409458480042, guid: 3cb60bb453052804db5278b968dbfeb6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2736,7 +2737,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1044340961
@@ -2747,6 +2748,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1044340958}
   m_CullTransparentMesh: 1
+--- !u!114 &1044340962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044340958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ea2faf1fd79443922bfb417616a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fontVi: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  fontEn: {fileID: 11400000, guid: 3cb60bb453052804db5278b968dbfeb6, type: 2}
+  materialVi: {fileID: 2100000, guid: 4c058d913867d1c48bd506d8febceb90, type: 2}
+  materialEn: {fileID: 2100000, guid: 73a590fcb43335b4995d4a23cde21055, type: 2}
+  key: accept
 --- !u!1 &1112148317
 GameObject:
   m_ObjectHideFlags: 0

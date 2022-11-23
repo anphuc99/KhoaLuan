@@ -13,8 +13,8 @@ public class BaseAttribute : MonoBehaviour
 
     private void Start()
     {
-        //moveSpeed = 200 + Global.playerClient.speed*10;
-        //jumpSpeed = 40 + Global.playerClient.jump;
-        //shotForce = 500 + Global.playerClient.shotForce*10;
+        moveSpeed = 200 + Global.playerClient.speed * 10;
+        jumpSpeed = 40 + Global.playerClient.jump;
+        shotForce = 15 + Global.playerClient.shotForce/2;
     }
 }

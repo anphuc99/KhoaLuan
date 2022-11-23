@@ -27,6 +27,8 @@ public class CameraScript : MonoBehaviour
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = -Input.GetAxis("Mouse Y");
 
+            rotY = player.transform.localRotation.eulerAngles.y;
+
             rotY += mouseX * mouseSensitivity * Time.deltaTime;
             rotX += mouseY * mouseSensitivity * Time.deltaTime;
 
@@ -37,10 +39,17 @@ public class CameraScript : MonoBehaviour
             Quaternion r_player = Quaternion.Euler(0, rotY, 0.0f);
             player.transform.rotation = r_player;
         }
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             isRotCamera = !isRotCamera;
             Cursor.visible = !isRotCamera;
+            Screen.lockCursor = isRotCamera;
         }
+    }
+
+    private void OnDisable()
+    {
+        Cursor.visible = true;
+        Screen.lockCursor = false;
     }
 }

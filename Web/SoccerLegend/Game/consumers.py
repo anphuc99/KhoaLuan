@@ -263,6 +263,21 @@ class ChatConsumer(WebsocketConsumer):
                 else:
                     player.exp = 0                
                 player.point += 1
+    
+    def logout(self, event):
+        _token = event["data"]
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name, {
+                "type": "kickUser",
+                "data": _token
+            })
+        
+    def kickUser(self, event):
+        if self._token == event["data"]:
+            self.send(json.dumps({
+                "type": "login",
+                "data": ""
+            }))
                 
                     
             

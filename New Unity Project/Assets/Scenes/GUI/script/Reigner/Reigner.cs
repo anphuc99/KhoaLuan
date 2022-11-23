@@ -38,7 +38,7 @@ public class Reigner : MonoBehaviour
             {
                 Debug.Log(s);
                 Debug.Log(transform.Find(s));
-                Text text = transform.Find(s).Find("Text").GetComponent<Text>();
+                InputField text = transform.Find(s).GetComponent<InputField>();
                 switch (s)
                 {
                     case "table/tbName":
@@ -119,8 +119,8 @@ public class Reigner : MonoBehaviour
     }
     public void ComfimPassword()
     {
-        if (password != comfimPassword)
-        {
+        if (!password.Equals(comfimPassword))
+         {
             throw new Exception("comfim_password_incorrect");
         }
     }

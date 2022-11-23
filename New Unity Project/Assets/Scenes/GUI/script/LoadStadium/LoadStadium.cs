@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadStadium : MonoBehaviour
 {
-    public GameObject progressBar;
+    public Slider progressBar;
     private bool start = false;
     private int event_id;
     // Start is called before the first frame update
@@ -16,7 +17,6 @@ public class LoadStadium : MonoBehaviour
 
     private void goToGame(object context)
     {
-        Debug.Log("werwerwer");
         start = true;
     }
 
@@ -24,9 +24,8 @@ public class LoadStadium : MonoBehaviour
     {
         if (start)
         {
-            ProgressBar progressBar = this.progressBar.GetComponent<ProgressBar>();
-            progressBar.addProgress(0.01f);
-            if (progressBar.progress >= 1)
+            progressBar.value += 0.01f;
+            if (progressBar.value >= 1)
             {
                 SceneManager.UnloadSceneAsync(SceneName.LoadStadium);
             }

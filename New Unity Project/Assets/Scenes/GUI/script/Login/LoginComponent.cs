@@ -13,10 +13,10 @@ public class LoginComponent : MonoBehaviour
     private string password;
     public void btnLogin_Click()
     {
-        Transform tbUsername = transform.Find("tbUsserName").Find("Text");
-        Transform tbPassword = transform.Find("tbPassword").Find("Text");
-        username = tbUsername.GetComponent<Text>().text;
-        password = tbPassword.GetComponent<Text>().text;
+        Transform tbUsername = transform.Find("tbUsserName");
+        Transform tbPassword = transform.Find("tbPassword");
+        username = tbUsername.GetComponent<InputField>().text;
+        password = tbPassword.GetComponent<InputField>().text;
         StartCoroutine(login());
     }
 

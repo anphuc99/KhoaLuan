@@ -13,6 +13,7 @@ public class Ball : MonoBehaviourPunCallbacks
     private int eventID2;
     private Queue<KeyValuePair<Vector3, Quaternion>> queuePoss = new Queue<KeyValuePair<Vector3, Quaternion>>();
     private bool IsMine = false;
+    private bool canKick = true;
 
     private void Awake()
     {
@@ -74,20 +75,29 @@ public class Ball : MonoBehaviourPunCallbacks
     private void OnCollisionEnter(Collision collision)
     {        
         if (Global.state != State.gameStart) return;
+        if (!canKick) return;
         if (collision.gameObject.tag == "Player" && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {            
             queuePoss.Clear();
             Rigidbody rb = GetComponent<Rigidbody>();
             Vector3 force = transform.position - collision.transform.position;
             BaseAttribute attribute = collision.gameObject.GetComponent<BaseAttribute>();
-            rb.AddForce(force*attribute.shotForce*10);
+            rb.velocity = force*attribute.shotForce;
             IsMine = true;
             photonView.RPC(nameof(changeOwner), RpcTarget.Others);
+            canKick = false;
+            StartCoroutine(setCanKick());
         }
         if (collision.gameObject.tag == "Player")
         {
             Event.emit(Events.playSound, touchBall);
         }
+    }
+
+    IEnumerator setCanKick()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canKick=true;
     }
 
     [PunRPC]

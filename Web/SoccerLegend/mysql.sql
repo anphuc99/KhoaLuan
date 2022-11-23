@@ -13,6 +13,6 @@ BEGIN
     FROM `game_gameinfo` 
     INNER JOIN `game_game` ON (`game_gameinfo`.`gameID` = `game_game`.`id`)
     WHERE `game_gameinfo`.`playerID` = playerID
-    ORDER BY `game_game`.`date` DESC
+    ORDER BY `game_game`.`id` DESC
     LIMIT 100;
 END$$

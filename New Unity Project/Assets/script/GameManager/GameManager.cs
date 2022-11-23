@@ -34,12 +34,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        if (curScene != null)
-            SceneManager.UnloadSceneAsync(curScene);
-        SceneManager.LoadSceneAsync(SceneName.Test, LoadSceneMode.Additive);
-        curScene = SceneName.Test;
-
-        //Event.emit(Events.gameOnStart, null);
+        //if (curScene != null)
+        //    SceneManager.UnloadSceneAsync(curScene);
+        //SceneManager.LoadSceneAsync(SceneName.Test, LoadSceneMode.Additive);
+        //curScene = SceneName.Test;
+        SceneManager.LoadSceneAsync(SceneName.LoadGame, LoadSceneMode.Additive);
+        Event.emit(Events.gameOnStart, null);
     }
 
     public void login(object context)

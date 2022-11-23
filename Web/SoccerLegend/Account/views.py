@@ -9,10 +9,13 @@ from rest_framework import status
 from .serializers import AddAccount, Login, SeriAccount, Token
 from .models import Account
 from django.db import IntegrityError
+from Game.consumers import ChatConsumer
+from websocket import create_connection
 import hashlib
 import base64
 import binascii
 import os
+import json
 # Create your views here.
 class RegisterAPI(APIView):    
     def  post(self, request):
@@ -51,20 +54,28 @@ class LoginAPI(APIView):
             return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)   
         username = loginData.data["username"]
         password = hashlib.md5(loginData.data["password"].encode('utf-8')).hexdigest()
-        if not self.checkLogin(username= username, password= password):
+        account = self.checkLogin(username= username, password= password)
+        if not account:
             return Response(data=dict(msg = "login_fail"), status=status.HTTP_400_BAD_REQUEST)            
-        else:
+        else:            
             account = SeriAccount(self.getToken(username= username))
             return Response(data=account.data, status=status.HTTP_200_OK)
     def checkLogin(self, username, password):
         try:
-            check = Account.objects.filter(username = username, password = password)
+            check = Account.objects.get(username = username, password = password)
             return check
         except Account.DoesNotExist:
             return False
     
     def getToken(self, username):        
         account = Account.objects.get(username = username)
+        ws = create_connection("ws://localhost:8000/ws/socket-server/")
+        print ("connected")
+        ws.send(json.dumps( {
+                "type": "logout",
+                "data": account._token
+            }))
+        ws.close()
         _token = binascii.hexlify(os.urandom(35)).decode();  
         account._token = _token
         account.save()
@@ -77,7 +88,7 @@ class TokenAPI(APIView):
             return Response(data="not ok", status=status.HTTP_400_BAD_REQUEST)   
         token = self.checkToken(_token = tokenData.data["_token"])
         if not token:
-            return Response(data=dict(msg = "Login_fail"), status=status.HTTP_400_BAD_REQUEST)   
+            return Response(data=dict(msg = "login_fail"), status=status.HTTP_400_BAD_REQUEST)   
         else:
             print(token.username)
             account = SeriAccount(LoginAPI.getToken(self= LoginAPI ,username = token.username))
