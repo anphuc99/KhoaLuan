@@ -16,6 +16,7 @@ public class PlayerClientManager : MonoBehaviour
 
     public void logedIn(object context)
     {
+        Debug.Log("fwoieoirwoeoriweruower");
         account = (Account)context;
         PlayerPrefs.SetString("_token", account._token);
         PlayerPrefs.Save();

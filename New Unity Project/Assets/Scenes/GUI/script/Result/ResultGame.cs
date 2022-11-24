@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
-using Photon.Pun;
 
 public class ResultGame : MonoBehaviour
 {
@@ -101,10 +100,6 @@ public class ResultGame : MonoBehaviour
 
     public void backToHistory()
     {
-        if (PhotonNetwork.IsConnected)
-        {
-            PhotonNetwork.Disconnect();
-        }
         Event.emit(Events.showHistory, null);
     }
 }

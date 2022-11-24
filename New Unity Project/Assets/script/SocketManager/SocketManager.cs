@@ -2,69 +2,83 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WebSocketSharp;
 
+using NativeWebSocket;
 public class SocketManager : MonoBehaviour
 {
-    public string webSocketURL;
-    private WebSocket ws;
-    private string msg = null;
-    public bool IsConnected = false;
+    WebSocket websocket;
 
     private void Awake()
     {
-        Event.register(Events.connected, Connected);
-        Event.register(Events.closeSocket, Close);
-        Event.register(Events.socketSendMessage, SendMessage);
+        Event.register(Events.socketSendMessage, SendWebSocketMessage);
     }
-
-    private void Connected(object context)
+    
+    // Start is called before the first frame update
+    private void Start()
     {
-        ws = new WebSocket(webSocketURL);
-        ws.Connect();
-        IsConnected = true;
-        Debug.Log("Connected socket");
-        ws.OnClose += OnClose;
-        ws.OnMessage += OnMessage;
-    }
+        websocket = new WebSocket("wss://socket.soccerlegend.devmini.com");
+        //wss://socket.soccerlegend.devmini.com
 
-    private void Update()
-    {
-        if (msg != null)
+        websocket.OnOpen += () =>
         {
-            string json = msg;
-            Debug.Log(json);
-            Json.SocketResponse response = JsonUtility.FromJson<Json.SocketResponse>(json);
-            Event.emit(response.type, response.data);
-            msg = null;
+            Debug.Log("Connection open!");
+        };
+
+        websocket.OnError += (e) =>
+        {
+            Debug.Log("Error! " + e);
+        };
+
+        websocket.OnClose += (e) =>
+        {
+            Debug.Log("Connection closed!");
+        };
+
+        websocket.OnMessage += OnMessage;
+        StartCoroutine(enumerator());
+
+        // waiting for messages
+        websocket.Connect();
+    }
+
+    void Update()
+    {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        websocket.DispatchMessageQueue();
+#endif
+        if (websocket.State == WebSocketState.Open)
+        {
+            websocket.SendText("qweqweqwe");
         }
     }
 
-    private void OnMessage(object sender,MessageEventArgs e)
+    IEnumerator enumerator()
     {
-        msg = e.Data;
-    }
-    
-    private void OnClose(object sender, EventArgs e)
-    {
-        Debug.Log("Close connect socket");
-        IsConnected = false;
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            
+        }
     }
 
-    private void Close(object context){
-        if (!IsConnected) return;
-        ws.Close();
+    private void SendWebSocketMessage(object context)
+    {
+        if (websocket.State == WebSocketState.Open)
+        {
+            websocket.SendText(JsonUtility.ToJson(context));
+        }
     }
 
-    private void SendMessage(object context)
+    private void OnMessage(byte[] bytes)
     {
-        if (!IsConnected) return;
-        string json = JsonUtility.ToJson(context);
-        ws.Send(json);
+        Debug.Log("hahahahahah");
+        //var message = System.Text.Encoding.UTF8.GetString(bytes);
+        //Json.SocketResponse socketResponse = JsonUtility.FromJson<Json.SocketResponse>(message);
+        //Event.emit(socketResponse.type, socketResponse.data);
     }
 
-    private void OnApplicationQuit()
+    private async void OnApplicationQuit()
     {
-        ws.Close();
+        await websocket.Close();
     }
 }

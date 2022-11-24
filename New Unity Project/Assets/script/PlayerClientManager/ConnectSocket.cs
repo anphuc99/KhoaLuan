@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
 
 public class ConnectSocket : MonoBehaviour
 {
@@ -20,7 +18,6 @@ public class ConnectSocket : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(stayConnected());
     }
 
     private void onLogin(object context)
@@ -35,43 +32,15 @@ public class ConnectSocket : MonoBehaviour
         Event.emit(Events.socketSendMessage, socketType);
     }
 
-    IEnumerator stayConnected()
-    {
-        while (true)
-        {
-            if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-            {
-                Json.SocketType<string> socketType = new Json.SocketType<string>()
-                {
-                    type = "connectWithMaster",
-                    data = Global.account._token,
-                };
-                Event.emit(Events.socketSendMessage, socketType);
-            }
-            yield return new WaitForSeconds(1);
-        }
-    }
 
     private void setNewMaster(object _newMaster)
     {
-        Debug.Log("setNewMaster");
-        string newMaster = (string)_newMaster;
-        Dictionary<int, Player> playerList = PhotonNetwork.CurrentRoom.Players;        
-        foreach (var player in playerList)
-        {
-            if (player.Value.UserId == newMaster)
-            {
-                PhotonNetwork.SetMasterClient(player.Value);
-            }
-        }
+       
     }
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log("hhh");
-        }
+       
     }
 
     private void onLogout(object context)
@@ -80,11 +49,7 @@ public class ConnectSocket : MonoBehaviour
     }
 
     private void endGame(object context)
-    {
-        if(PhotonNetwork.IsConnected)
-        {
-            PhotonNetwork.Disconnect();
-        }            
+    {                  
         Json.EndGame endGame = JsonUtility.FromJson<Json.EndGame>((string)context);
         Global.gameID = endGame.gameID;
         Event.emit(Events.showResult, null);
@@ -97,7 +62,6 @@ public class ConnectSocket : MonoBehaviour
         {
             roomID = (string)roomid,
             _token = Global.account._token,
-            clientID = PhotonNetwork.LocalPlayer.UserId
         };
         Json.SocketType<Json.Room> socketType = new Json.SocketType<Json.Room>()
         {
@@ -124,7 +88,6 @@ public class ConnectSocket : MonoBehaviour
         {
             roomID = (string)roomid,
             _token = Global.account._token,
-            clientID = PhotonNetwork.LocalPlayer.UserId
         };
         Json.SocketType<Json.Room> socketType = new Json.SocketType<Json.Room>()
         {

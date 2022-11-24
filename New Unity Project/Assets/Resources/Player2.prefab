@@ -389,10 +389,8 @@ GameObject:
   - component: {fileID: 6570044679656287837}
   - component: {fileID: 1175047586774493956}
   - component: {fileID: 2105375679035201831}
-  - component: {fileID: 1850191042717186352}
   - component: {fileID: -877369568967001406}
   - component: {fileID: 3826784857790081676}
-  - component: {fileID: 9026428861190619078}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -519,39 +517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d182d5e995964414dbbf24325563e543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1850191042717186352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1950551962244357326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 9
-    SynchronizeType: 2
-    Name: jumpDown
-  - Type: 9
-    SynchronizeType: 2
-    Name: kichTheBall
-  - Type: 9
-    SynchronizeType: 2
-    Name: header
-  - Type: 4
-    SynchronizeType: 2
-    Name: run
-  - Type: 4
-    SynchronizeType: 2
-    Name: jumpUp
-  m_SynchronizeLayers:
-  - SynchronizeType: 2
-    LayerIndex: 0
 --- !u!114 &-877369568967001406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,29 +544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 134860c2c0f98f84db0d63431ec0295f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9026428861190619078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1950551962244357326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1850191042717186352}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &2321557151117284583
 GameObject:
   m_ObjectHideFlags: 0

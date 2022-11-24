@@ -1,4 +1,3 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,6 @@ public class character : MonoBehaviour
     private Rigidbody rigidbody;
     private CapsuleCollider capsuleCollider;
     private Animator animator;
-    private PhotonView photonView;
     private BaseAttribute baseAttribute;
 
     private void Awake()
@@ -28,10 +26,8 @@ public class character : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         animator = GetComponent<Animator>();
-        photonView = GetComponent<PhotonView>();
         baseAttribute = GetComponent<BaseAttribute>();
 
-        if (!photonView.IsMine) return;
         Camera camera = Camera.main;
         camera.transform.parent.SetParent(transform);
         camera.transform.parent.transform.localPosition = new Vector3(0, 1, 0);
@@ -43,7 +39,6 @@ public class character : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!photonView.IsMine) return;
         TurnInput = Input.GetAxis("Horizontal");
         ForwardInput = Input.GetAxis("Vertical");
         if (Input.GetKeyDown(KeyCode.Space))
