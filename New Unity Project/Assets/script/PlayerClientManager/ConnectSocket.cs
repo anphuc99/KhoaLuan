@@ -66,14 +66,6 @@ public class ConnectSocket : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log("hhh");
-        }
-    }
-
     private void onLogout(object context)
     {
         Event.emit(Events.closeSocket, null);
