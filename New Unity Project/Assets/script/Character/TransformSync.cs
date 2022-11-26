@@ -11,9 +11,9 @@ public class TransformSync : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb.velocity != Vector3.zero)
+            if (PhotonNetwork.IsConnected)
             {
+                Rigidbody rb = GetComponent<Rigidbody>();
                 photonView.RPC(nameof(Move),RpcTarget.Others, transform.position, transform.rotation);            
             }
         }

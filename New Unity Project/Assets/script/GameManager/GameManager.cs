@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
         Event.register(Events.showHistory, showHistory);
         Event.register(Events.showResult, showResult);
 
+        SceneManager.LoadSceneAsync(SceneName.LoadGame, LoadSceneMode.Additive);
+
         string clientLang = PlayerPrefs.GetString("Lang");        
         if (clientLang == null || clientLang == "")
         {
@@ -38,7 +40,6 @@ public class GameManager : MonoBehaviour
         //    SceneManager.UnloadSceneAsync(curScene);
         //SceneManager.LoadSceneAsync(SceneName.Test, LoadSceneMode.Additive);
         //curScene = SceneName.Test;
-        SceneManager.LoadSceneAsync(SceneName.LoadGame, LoadSceneMode.Additive);
         Event.emit(Events.gameOnStart, null);
     }
 

@@ -13,6 +13,7 @@ public class AudioSound : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        setVolumeSound(null);
     }
 
     private void setVolumeSound(object context)

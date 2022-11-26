@@ -18,38 +18,17 @@ public class ConnectSocket : MonoBehaviour
         Event.register(Events.setNewMaster, setNewMaster);
     }
 
-    private void Start()
-    {
-        StartCoroutine(stayConnected());
-    }
-
     private void onLogin(object context)
     {
         Event.emit(Events.connected, null);
         string _token = Global.account._token;
+        Debug.Log(_token);
         Json.SocketType<string> socketType = new Json.SocketType<string>()
         {
             type = "login",
             data = _token,
         };
         Event.emit(Events.socketSendMessage, socketType);
-    }
-
-    IEnumerator stayConnected()
-    {
-        while (true)
-        {
-            if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-            {
-                Json.SocketType<string> socketType = new Json.SocketType<string>()
-                {
-                    type = "connectWithMaster",
-                    data = Global.account._token,
-                };
-                Event.emit(Events.socketSendMessage, socketType);
-            }
-            yield return new WaitForSeconds(1);
-        }
     }
 
     private void setNewMaster(object _newMaster)

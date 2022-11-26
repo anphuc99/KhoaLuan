@@ -114,7 +114,9 @@ public class Define
 
 public struct URL
 {
-    public const string root = "http://127.0.0.1:8000/";
+    //http://127.0.0.1:8000/
+    //https://api.soccerlegend.devmini.com/
+    public const string root = "https://api.soccerlegend.devmini.com/";
     public const string account_register = root + "account/register";
     public const string account_login = root + "account/login";
     public const string account_token = root + "account/token";

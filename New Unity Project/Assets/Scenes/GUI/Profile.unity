@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8103877d5f2a1cf4a9437b8dba24c2e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8dc9bb3f0a2ff53449acbc6942758cd9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2675,7 +2675,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ebd9a9cc83ae3964cb0c1ebfe271623f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6dcf22fcaae277c47b2dbd0dcc41e533, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6430,7 +6430,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2c712fd40fca9504188ed117add23029, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1769b15232c550841bcaa3699b161ad6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6463,7 +6463,7 @@ MonoBehaviour:
   lang:
   - en
   - vi
-  vi: {fileID: 21300000, guid: 2c712fd40fca9504188ed117add23029, type: 3}
+  vi: {fileID: 21300000, guid: 1769b15232c550841bcaa3699b161ad6, type: 3}
   en: {fileID: 21300000, guid: a74726eb691af4a4ea8c0680e7fc6dc3, type: 3}
 --- !u!1 &1497928414
 GameObject:
@@ -7800,6 +7800,7 @@ PrefabInstance:
     - {fileID: 2105375679035201831, guid: 57d811b227c15864d9093682950a2f01, type: 3}
     - {fileID: 6570044679656287837, guid: 57d811b227c15864d9093682950a2f01, type: 3}
     - {fileID: 1716057814129903672, guid: 57d811b227c15864d9093682950a2f01, type: 3}
+    - {fileID: 3826784857790081676, guid: 57d811b227c15864d9093682950a2f01, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 57d811b227c15864d9093682950a2f01, type: 3}
 --- !u!1 &1730288566
 GameObject:
@@ -9496,7 +9497,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -140.1, y: -137}
+  m_AnchoredPosition: {x: -111.21, y: -130}
   m_SizeDelta: {x: 191.8, y: 116.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2081409442
@@ -9553,7 +9554,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

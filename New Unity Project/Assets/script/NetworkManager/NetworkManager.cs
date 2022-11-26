@@ -13,6 +13,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Event.register(Events.onStart, onStart);
         Event.register(Events.goBack, goBack);
     }
+
     private void onStart(object context)
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -82,5 +83,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Event.emit(Events.playerLeaveRoom, otherPlayer);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Json.SocketType<string> socketType = new Json.SocketType<string>()
+        {
+            type = "disconnectPhoton",
+            data = ""
+        };
+
+        Event.emit(Events.socketSendMessage, socketType);
     }
 }
