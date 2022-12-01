@@ -63,7 +63,10 @@ public static class Events
         setVolumeMusic = "setVolumeMusic",
         stopSound = "stopSound",
         setVolumeSound = "setVolumeSound",
-        playSound = "playSound";
+        playSound = "playSound",
+        horizotalSpeed = "horizotalSpeed",
+        verticalSpeed = "verticalSpeed",
+        jumpSpeed = "jumpSpeed";
 
 }
 public struct SceneName

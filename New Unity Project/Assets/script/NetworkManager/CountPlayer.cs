@@ -31,7 +31,6 @@ public class CountPlayer : MonoBehaviourPunCallbacks
         {
             if (!isJoinRoom) return;
             int playerInRooms = PhotonNetwork.CurrentRoom.Players.Count;
-            Debug.Log(oldCount);
             if (oldCount != playerInRooms)
             {
                 Event.emit(Events.numberOfPlayersChange, playerInRooms);

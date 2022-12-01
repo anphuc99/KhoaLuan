@@ -1,11 +1,9 @@
 using Assets.script.Player;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using UnityEngine.Windows;
 using TMPro;
 using Assets.script.Lib;
 

@@ -17,7 +17,7 @@ public class SocketManager1 : MonoBehaviour
     private void Start()
     {
         websocket = new WebSocket("wss://devmini.com");
-        //wss://socket.soccerlegend.devmini.com
+        //wss://devmini.com
         //ws://localhost:3000
 
         websocket.OnOpen += () =>
@@ -53,8 +53,7 @@ public class SocketManager1 : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.5f);
-            
+            yield return new WaitForSeconds(0.5f);            
         }
     }
 
