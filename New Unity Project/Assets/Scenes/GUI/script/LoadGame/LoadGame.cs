@@ -20,8 +20,7 @@ public class LoadGame : MonoBehaviour
 
     private void Awake()
     {
-        eventID1 = Event.register(Events.loggedIn, delegate(object context) { status.text = Lang.toText("connecting"); });
-        eventID2 = Event.register(Events.canConnect, connected);
+        eventID2 = Event.register(Events.connected, connected);
         eventID3 = Event.register(Events.goToLobby, delegate (object context) { start = true; });
         eventID4 = Event.register(Events.login, UnloadScene);
         eventID5 = Event.register(Events.createPlayer, UnloadScene);
@@ -29,7 +28,7 @@ public class LoadGame : MonoBehaviour
 
     private void Start()
     {
-        status.text = Lang.toText("logged_in");
+        status.text = Lang.toText("connecting");
     }
 
     // Update is called once per frame
@@ -48,7 +47,7 @@ public class LoadGame : MonoBehaviour
 
     private void connected(object context)
     {
-        status.text = Lang.toText("connected");
+        status.text = Lang.toText("logged_in");
     }
 
     private void UnloadScene(object context)

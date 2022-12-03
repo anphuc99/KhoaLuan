@@ -16,7 +16,7 @@ public class ButtonPress : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Awake()
     {
-        if(Application.platform == RuntimePlatform.WindowsPlayer)
+        if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
         {
             Destroy(this);
         }
@@ -36,7 +36,7 @@ public class ButtonPress : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (buttonDown)
         {
-            if ((Input.touchCount >= 1) && (Input.GetTouch(Input.touchCount - 1).phase == TouchPhase.Began))
+            if (Input.touchCount >= 1)
             {
                 tuochID = Input.touchCount - 1;
                 Debug.Log("[Debug ButtonPressed]: "+tuochID);
@@ -54,19 +54,20 @@ public class ButtonPress : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (buttonPress)
         {
+            Debug.Log("tuochID: "+tuochID);
             Vector2 newpos = Input.GetTouch(tuochID).position;
             Vector2 pos = newpos - oldPos ?? newpos;
             Debug.Log(pos.normalized);
             oldPos = newpos;
             if (onButtonPressed != null)
             {
-                if(pos.magnitude < 1)
+                if(pos.magnitude < 2)
                 {
                     onButtonPressed(pos);
                 }
                 else
                 {
-                    onButtonPressed(pos.normalized);
+                    onButtonPressed(pos.normalized*2);
                 }
             }
         }

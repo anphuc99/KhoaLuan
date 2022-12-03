@@ -16,13 +16,14 @@ public class SocketManager1 : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        websocket = new WebSocket("wss://devmini.com");
+        websocket = new WebSocket(Define.WebsocetURL);
         //wss://devmini.com
         //ws://localhost:3000
 
         websocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
+            Event.emit(Events.connected,null);
         };
 
         websocket.OnError += (e) =>

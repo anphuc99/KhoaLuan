@@ -9,6 +9,7 @@ public class SettingDefine : MonoBehaviour
     public int TimeGame = 300;
     public int TimeOver = 30;
     public int scoreWin = 5;
+    public bool local = false;
     public Vector3[,] positionTeam = new Vector3[2, 3]
     {
         {
@@ -38,5 +39,15 @@ public class SettingDefine : MonoBehaviour
         Define.TimeGame = TimeGame;
         Define.TimeOver = TimeOver;
         Define.scoreWin = scoreWin;
+        if (local)
+        {
+            Define.Website = "http://192.168.1.145:8000/";
+            Define.WebsocetURL = "ws://192.168.1.145:3000";
+        }
+        else
+        {
+            Define.Website = "https://api.soccerlegend.devmini.com/";
+            Define.WebsocetURL = "wss://devmini.com";
+        }
     }
 }

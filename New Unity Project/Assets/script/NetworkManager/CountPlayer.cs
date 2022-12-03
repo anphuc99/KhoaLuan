@@ -33,7 +33,7 @@ public class CountPlayer : MonoBehaviourPunCallbacks
             int playerInRooms = PhotonNetwork.CurrentRoom.Players.Count;
             if (oldCount != playerInRooms)
             {
-                Event.emit(Events.numberOfPlayersChange, playerInRooms);
+                StartCoroutine(emitCount(playerInRooms));
                 oldCount = playerInRooms;
             }
         }
@@ -41,5 +41,11 @@ public class CountPlayer : MonoBehaviourPunCallbacks
         {
             Debug.LogException(e);
         }
+    }
+
+    IEnumerator emitCount(int num)
+    {
+        yield return new WaitForSeconds(0.5f);
+        Event.emit(Events.numberOfPlayersChange, num);
     }
 }

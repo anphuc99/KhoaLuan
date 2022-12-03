@@ -20,7 +20,6 @@ public class ConnectSocket : MonoBehaviour
 
     private void onLogin(object context)
     {
-        Event.emit(Events.connected, null);
         string _token = Global.account._token;
         Debug.Log(_token);
         Json.SocketType<string> socketType = new Json.SocketType<string>()

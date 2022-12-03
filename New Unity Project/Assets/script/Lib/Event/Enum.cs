@@ -10,6 +10,7 @@ public static class Events
     public static string
         login = "login",
         loggedIn = "loggedIn",
+
         canConnect = "canConnect",
         register = "register",
         goBack = "goBack",
@@ -94,6 +95,8 @@ public class Define
     public static int TimeGame = 300;
     public static int TimeOver = 30;
     public static int scoreWin = 5;
+    public static string WebsocetURL = "";
+    public static string Website = "";
     public static Vector3[,] positionTeam = new Vector3[2, 3]
     {
         {
@@ -115,21 +118,20 @@ public class Define
     };
 }
 
-public struct URL
+public class URL
 {
     //http://127.0.0.1:8000/
     //https://api.soccerlegend.devmini.com/
-    public const string root = "https://api.soccerlegend.devmini.com/";
-    public const string account_register = root + "account/register";
-    public const string account_login = root + "account/login";
-    public const string account_token = root + "account/token";
-    public const string player_chooseCharacter = root + "player/choose-character";
-    public const string player_checkPlayer = root + "player/check-player";
-    public const string player_setMultiplier = root + "player/set-multiplier";
-    public const string game_getTopRank = root + "game/get-top-rank";
-    public const string game_getMyRank = root + "game/get-my-rank";
-    public const string game_getHistory = root + "game/get-history";
-    public const string game_getGameInfo = root + "game/get-game-info";
+    public static string account_register { get { return Define.Website + "account/register"; } }
+    public static string account_login { get { return Define.Website + "account/login"; } }
+    public static string account_token { get { return Define.Website + "account/token"; } }
+    public static string player_chooseCharacter { get { return Define.Website + "player/choose-character"; } }
+    public static string player_checkPlayer { get { return Define.Website + "player/check-player"; } }
+    public static string player_setMultiplier { get { return Define.Website + "player/set-multiplier"; } }
+    public static string game_getTopRank { get { return Define.Website + "game/get-top-rank"; } }
+    public static string game_getMyRank { get { return Define.Website + "game/get-my-rank"; } }
+    public static string game_getHistory { get { return Define.Website + "game/get-history"; } }
+    public static string game_getGameInfo { get { return Define.Website + "game/get-game-info"; } }
 }
 
 public struct Value

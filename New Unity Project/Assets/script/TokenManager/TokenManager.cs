@@ -8,7 +8,7 @@ public class TokenManager : MonoBehaviour
 {
     private void Awake()
     {
-        Event.register(Events.gameOnStart, gameOnStart);
+        Event.register(Events.connected, gameOnStart);
     }
     public void gameOnStart(object context)
     {
