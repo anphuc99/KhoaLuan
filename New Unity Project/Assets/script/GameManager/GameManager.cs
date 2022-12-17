@@ -43,6 +43,21 @@ public class GameManager : MonoBehaviour
         Event.emit(Events.gameOnStart, null);
     }
 
+    private void Update()
+    {
+        // Make sure user is on Android platform
+        if (Application.platform == RuntimePlatform.Android)
+        {
+
+            // Check if Back was pressed this frame
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // Quit the application
+                Application.Quit();
+            }
+        }
+    }
+
     public void login(object context)
     {
         if (curScene != null)

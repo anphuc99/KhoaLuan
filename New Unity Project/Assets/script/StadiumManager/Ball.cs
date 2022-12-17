@@ -82,7 +82,7 @@ public class Ball : MonoBehaviourPunCallbacks
             Rigidbody rb = GetComponent<Rigidbody>();
             Vector3 force = transform.position - collision.transform.position;
             BaseAttribute attribute = collision.gameObject.GetComponent<BaseAttribute>();
-            rb.velocity = force*attribute.shotForce;
+            rb.velocity = force.normalized*attribute.shotForce;
             IsMine = true;
             photonView.RPC(nameof(changeOwner), RpcTarget.Others);
             canKick = false;
