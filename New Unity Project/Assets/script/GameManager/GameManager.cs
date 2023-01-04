@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
     public void register(object context)
     {
         if (curScene != null)
-            SceneManager.UnloadSceneAsync(SceneName.Login);
+            SceneManager.UnloadSceneAsync(curScene);
         SceneManager.LoadSceneAsync(SceneName.Register, LoadSceneMode.Additive);
         curScene = SceneName.Register;
     }
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void onStart(object context)
     {
         if (curScene != null)
-            SceneManager.UnloadSceneAsync(SceneName.Lobby);
+            SceneManager.UnloadSceneAsync(curScene);
         SceneManager.LoadSceneAsync(SceneName.Wait4Player, LoadSceneMode.Additive);
         curScene = SceneName.Wait4Player;
     }
